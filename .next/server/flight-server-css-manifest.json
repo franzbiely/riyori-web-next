@@ -1,0 +1,44 @@
+{
+  "cssImports": {
+    "/Users/francisalbores/Work/riyori-web-next/src/app/layout.tsx": [
+      "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/menu/page.tsx": [
+      "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/menu/menu.module.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/splash/page.tsx": [
+      "/Users/francisalbores/Work/riyori-web-next/src/app/splash/splash.module.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/opening/page.tsx": [
+      "/Users/francisalbores/Work/riyori-web-next/src/app/opening/opening.module.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/category/page.tsx": [
+      "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/category/category.module.css"
+    ]
+  },
+  "cssModules": {
+    "/Users/francisalbores/Work/riyori-web-next/src/app/page": [
+      "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/menu/page": [
+      "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/menu/menu.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/splash/page": [
+      "/Users/francisalbores/Work/riyori-web-next/src/app/splash/splash.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/opening/page": [
+      "/Users/francisalbores/Work/riyori-web-next/src/app/opening/opening.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/category/page": [
+      "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/category/category.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css"
+    ]
+  }
+}

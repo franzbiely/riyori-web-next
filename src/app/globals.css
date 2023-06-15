@@ -4,8 +4,30 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: #fff;
+  --background-end-rgb: #fff;
+
+  --color-primary: #DB1B1B;
+  --color-secondary: #000;
+  --color-tertiary: #fff;
+
+  --fontsize-primary: 20px;
+}
+.button-primary {
+  background-color: var(--color-tertiary);
+  color: var(--color-primary);
+  border-radius: 20px;
+  width: 100%;
+  font-size: var(--fontsize-primary);
+  padding: 8px;
+}
+.button-secondary {
+  background-color: var(--color-primary);
+  color: var(--color-tertiary);
+  border-radius: 20px;
+  width: 100%;
+  font-size: var(--fontsize-primary);
+  padding: 8px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +39,8 @@
 }
 
 body {
+  margin-bottom:100px;
+  font-family: 'Quicksand', sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #fff;
 }

@@ -1,0 +1,12 @@
+.category {
+    display: flex;
+    column-gap: 10px;
+    margin-bottom: 10px;
+}
+.category img{
+    object-fit:cover;
+    border-radius: 20px;
+}
+.category_meta button{
+    font-size: 12px;
+}
