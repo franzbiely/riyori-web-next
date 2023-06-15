@@ -1,0 +1,21 @@
+.item {
+    column-gap: 10px;
+    box-shadow: 0 0 4px #ccc;
+    padding: 13px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+.item img {
+    object-fit: contain;
+}
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+.item_meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 14px;
+}
