@@ -11,8 +11,14 @@
     display: flex;
     flex-direction: column;
 }
+.layout_f6__ZZeqe {
+    flex: 6;
+}
 .layout_f8__nf1U_ {
     flex: 8;
+}
+.layout_right__J718y {
+    text-align: right;
 }
 .layout_app_inner_page__4m0yJ {
     background-color: #fff;

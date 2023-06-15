@@ -1,0 +1,65 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[7].use[3]!./src/components/layout.module.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+.layout_container__XI0Sj {
+    display: flex;
+}
+.layout_column__B_KCU {
+    flex: 1;
+}
+.layout_greetings__4fZ17 {
+    display: flex;
+    flex-direction: column;
+}
+.layout_f6__ZZeqe {
+    flex: 6;
+}
+.layout_f8__nf1U_ {
+    flex: 8;
+}
+.layout_right__J718y {
+    text-align: right;
+}
+.layout_app_inner_page__4m0yJ {
+    background-color: #fff;
+    min-height: 100vh;
+    color: var(--color-secondary);
+    padding: 15px;
+}
+.layout_header__h9sve {
+    padding: 10px;
+}
+.layout_footer__r4syy {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 10px 0;
+    background-image: linear-gradient(180deg, rgba(255,255,255,0) 0, rgba(255,255,255,1) 100%);
+    background-position: 10% 90%;
+    background-origin: padding-box;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    background-size: auto auto;
+}
+.layout_footer__r4syy .layout_column__B_KCU{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.layout_search__TrrqI fieldset {
+    border: none;
+    background-color: #f6f6f6;
+}
+.layout_search__TrrqI .layout_inputAdornment__Qv479 {
+    z-index: 2;
+}
+.layout_search__TrrqI input {
+    z-index: 2;
+    font-size: 12px;
+}
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[2].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[2].oneOf[7].use[3]!./src/app/product/product.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+.product_featured_image__kglZ6 {
+    border-radius: 15px;
+}
