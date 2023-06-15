@@ -2,7 +2,7 @@ import styles from "./layout.module.css";
 import Image from 'next/image';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function Subinnerheader() {
+export default function Subinnerheader({title = ''}) {
   return (    
     <div className={styles.header}>
       
@@ -11,7 +11,7 @@ export default function Subinnerheader() {
             <Image className='image' src="/images/ryori-logo-red-small.png" alt="Ryori" width={25} height={31} />          
           </div>
           <div className={`${styles.column} ${styles.f8}`}>
-            <h4 className={styles.greetings}>Order</h4>            
+            <h4 className={styles.greetings}>{title}</h4>            
           </div>
           <div>
             <CloseIcon />

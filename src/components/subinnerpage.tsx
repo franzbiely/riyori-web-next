@@ -8,13 +8,14 @@ import Subinnerheader from './subinnerheader';
 
 type LayoutProps = {
   children: ReactNode;
+  title: string
 };
 
-export default function Subinnerpage({children}:LayoutProps) {
+export default function Subinnerpage({title, children}:LayoutProps) {
   return (
     <>
       <div className={styles.app_inner_page}>
-          <Subinnerheader />
+          <Subinnerheader title={title}/>
             {children}
           <Footer />
       </div>

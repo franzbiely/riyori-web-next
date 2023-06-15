@@ -222,26 +222,6 @@
         "async": false
       }
     },
-    "(app-client)/./src/components/search.tsx": {
-      "*": {
-        "id": "(sc_client)/./src/components/search.tsx",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      },
-      "": {
-        "id": "(sc_client)/./src/components/search.tsx",
-        "name": "",
-        "chunks": [],
-        "async": false
-      },
-      "default": {
-        "id": "(sc_client)/./src/components/search.tsx",
-        "name": "default",
-        "chunks": [],
-        "async": false
-      }
-    },
     "(app-client)/./src/components/quantityField.tsx": {
       "*": {
         "id": "(sc_client)/./src/components/quantityField.tsx",
@@ -297,6 +277,26 @@
       },
       "default": {
         "id": "(sc_client)/./src/components/table.tsx",
+        "name": "default",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./src/components/search.tsx": {
+      "*": {
+        "id": "(sc_client)/./src/components/search.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      },
+      "": {
+        "id": "(sc_client)/./src/components/search.tsx",
+        "name": "",
+        "chunks": [],
+        "async": false
+      },
+      "default": {
+        "id": "(sc_client)/./src/components/search.tsx",
         "name": "default",
         "chunks": [],
         "async": false
@@ -997,158 +997,6 @@
       ],
       "async": false
     },
-    "/Users/francisalbores/Work/riyori-web-next/src/app/category/category.module.css#": {
-      "id": "null",
-      "name": "default",
-      "chunks": [
-        "static/css/app/category/page.css"
-      ]
-    },
-    "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css#": {
-      "id": "null",
-      "name": "default",
-      "chunks": [
-        "static/css/app/category/page.css",
-        "static/css/app/product/page.css",
-        "static/css/app/checkout/page.css"
-      ]
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/client/image.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "*",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/client/image.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "*",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/client/image.js#": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/client/image.js#": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/client/image.js#default": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "default",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/client/image.js#default": {
-      "id": "(app-client)/./node_modules/next/dist/client/image.js",
-      "name": "default",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "*",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "*",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js#": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js#": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js#default": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "default",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js#default": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "default",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js#defaultHead": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "defaultHead",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js#defaultHead": {
-      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
-      "name": "defaultHead",
-      "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/src/components/search.tsx": {
-      "id": "(app-client)/./src/components/search.tsx",
-      "name": "*",
-      "chunks": [
-        "app/category/page:static/chunks/app/category/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/src/components/search.tsx#": {
-      "id": "(app-client)/./src/components/search.tsx",
-      "name": "",
-      "chunks": [
-        "app/category/page:static/chunks/app/category/page.js"
-      ],
-      "async": false
-    },
-    "/Users/francisalbores/Work/riyori-web-next/src/components/search.tsx#default": {
-      "id": "(app-client)/./src/components/search.tsx",
-      "name": "default",
-      "chunks": [
-        "app/category/page:static/chunks/app/category/page.js"
-      ],
-      "async": false
-    },
     "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css#": {
       "id": "null",
       "name": "default",
@@ -1162,6 +1010,128 @@
       "chunks": [
         "static/css/app/product/page.css"
       ]
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css#": {
+      "id": "null",
+      "name": "default",
+      "chunks": [
+        "static/css/app/product/page.css",
+        "static/css/app/category/page.css",
+        "static/css/app/checkout/page.css",
+        "static/css/app/orders/page.css"
+      ]
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/client/image.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "*",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/client/image.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "*",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/client/image.js#": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/client/image.js#": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/client/image.js#default": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "default",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/client/image.js#default": {
+      "id": "(app-client)/./node_modules/next/dist/client/image.js",
+      "name": "default",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "*",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "*",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js#": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js#": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js#default": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "default",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js#default": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "default",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/shared/lib/head.js#defaultHead": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "defaultHead",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/esm/shared/lib/head.js#defaultHead": {
+      "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
+      "name": "defaultHead",
+      "chunks": [
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
     },
     "/Users/francisalbores/Work/riyori-web-next/src/components/quantityField.tsx": {
       "id": "(app-client)/./src/components/quantityField.tsx",
@@ -1191,7 +1161,7 @@
       "id": "(app-client)/./src/components/subinnerpage.tsx",
       "name": "*",
       "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
+        "app/orders/page:static/chunks/app/orders/page.js"
       ],
       "async": false
     },
@@ -1199,7 +1169,7 @@
       "id": "(app-client)/./src/components/subinnerpage.tsx",
       "name": "",
       "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
+        "app/orders/page:static/chunks/app/orders/page.js"
       ],
       "async": false
     },
@@ -1207,7 +1177,7 @@
       "id": "(app-client)/./src/components/subinnerpage.tsx",
       "name": "default",
       "chunks": [
-        "app/checkout/page:static/chunks/app/checkout/page.js"
+        "app/orders/page:static/chunks/app/orders/page.js"
       ],
       "async": false
     },
@@ -1215,7 +1185,7 @@
       "id": "(app-client)/./src/components/table.tsx",
       "name": "*",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/orders/page:static/chunks/app/orders/page.js"
       ],
       "async": false
     },
@@ -1223,7 +1193,7 @@
       "id": "(app-client)/./src/components/table.tsx",
       "name": "",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/orders/page:static/chunks/app/orders/page.js"
       ],
       "async": false
     },
@@ -1231,7 +1201,38 @@
       "id": "(app-client)/./src/components/table.tsx",
       "name": "default",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/orders/page:static/chunks/app/orders/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/app/category/category.module.css#": {
+      "id": "null",
+      "name": "default",
+      "chunks": [
+        "static/css/app/category/page.css"
+      ]
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/components/search.tsx": {
+      "id": "(app-client)/./src/components/search.tsx",
+      "name": "*",
+      "chunks": [
+        "app/category/page:static/chunks/app/category/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/components/search.tsx#": {
+      "id": "(app-client)/./src/components/search.tsx",
+      "name": "",
+      "chunks": [
+        "app/category/page:static/chunks/app/category/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/components/search.tsx#default": {
+      "id": "(app-client)/./src/components/search.tsx",
+      "name": "default",
+      "chunks": [
+        "app/category/page:static/chunks/app/category/page.js"
       ],
       "async": false
     },
@@ -1265,6 +1266,13 @@
         "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/app/orders/orders.module.css#": {
+      "id": "null",
+      "name": "default",
+      "chunks": [
+        "static/css/app/orders/page.css"
+      ]
     }
   }
 }

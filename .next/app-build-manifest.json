@@ -1,11 +1,5 @@
 {
   "pages": {
-    "/category/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/category/page.css",
-      "static/chunks/app/category/page.js"
-    ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -18,11 +12,23 @@
       "static/css/app/product/page.css",
       "static/chunks/app/product/page.js"
     ],
+    "/category/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/category/page.css",
+      "static/chunks/app/category/page.js"
+    ],
     "/checkout/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/checkout/page.css",
       "static/chunks/app/checkout/page.js"
+    ],
+    "/orders/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/orders/page.css",
+      "static/chunks/app/orders/page.js"
     ]
   }
 }
