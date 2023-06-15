@@ -8,8 +8,17 @@
     display: flex;
     flex-direction: column;
 }
+.f1 {
+    flex: 1;
+}
+.f2 {
+    flex: 2;
+}
 .f6 {
     flex: 6;
+}
+.f7 {
+    flex: 7;
 }
 .f8 {
     flex: 8;
