@@ -1,0 +1,9 @@
+.rate_container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:10px;
+}
+.p {
+    font-size: 12px;
+}
