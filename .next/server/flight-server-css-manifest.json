@@ -10,6 +10,10 @@
     "/Users/francisalbores/Work/riyori-web-next/src/app/product/page.tsx": [
       "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
       "/Users/francisalbores/Work/riyori-web-next/src/app/product/product.module.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/page.tsx": [
+      "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/checkout.module.css"
     ]
   },
   "cssModules": {
@@ -22,6 +26,11 @@
       "/Users/francisalbores/Work/riyori-web-next/src/app/product/product.module.css",
       "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
       "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css"
+    ],
+    "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/page": [
+      "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/components/layout.module.css",
+      "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/checkout.module.css"
     ]
   }
 }

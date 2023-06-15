@@ -301,6 +301,26 @@
         "chunks": [],
         "async": false
       }
+    },
+    "(app-client)/./src/app/checkout/page.tsx": {
+      "*": {
+        "id": "(sc_client)/./src/app/checkout/page.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      },
+      "": {
+        "id": "(sc_client)/./src/app/checkout/page.tsx",
+        "name": "",
+        "chunks": [],
+        "async": false
+      },
+      "default": {
+        "id": "(sc_client)/./src/app/checkout/page.tsx",
+        "name": "default",
+        "chunks": [],
+        "async": false
+      }
     }
   },
   "edgeSSRModuleMapping": {},
@@ -977,13 +997,6 @@
       ],
       "async": false
     },
-    "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css#": {
-      "id": "null",
-      "name": "default",
-      "chunks": [
-        "static/css/app/layout.css"
-      ]
-    },
     "/Users/francisalbores/Work/riyori-web-next/src/app/category/category.module.css#": {
       "id": "null",
       "name": "default",
@@ -996,14 +1009,15 @@
       "name": "default",
       "chunks": [
         "static/css/app/category/page.css",
-        "static/css/app/product/page.css"
+        "static/css/app/product/page.css",
+        "static/css/app/checkout/page.css"
       ]
     },
     "/Users/francisalbores/Work/riyori-web-next/node_modules/next/dist/client/image.js": {
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "*",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1011,7 +1025,7 @@
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "*",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1019,7 +1033,7 @@
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1027,7 +1041,7 @@
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1035,7 +1049,7 @@
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "default",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1043,7 +1057,7 @@
       "id": "(app-client)/./node_modules/next/dist/client/image.js",
       "name": "default",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1051,7 +1065,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "*",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1059,7 +1073,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "*",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1067,7 +1081,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1075,7 +1089,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1083,7 +1097,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "default",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1091,7 +1105,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "default",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1099,7 +1113,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "defaultHead",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1107,7 +1121,7 @@
       "id": "(app-client)/./node_modules/next/dist/shared/lib/head.js",
       "name": "defaultHead",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1135,6 +1149,13 @@
       ],
       "async": false
     },
+    "/Users/francisalbores/Work/riyori-web-next/src/app/globals.css#": {
+      "id": "null",
+      "name": "default",
+      "chunks": [
+        "static/css/app/layout.css"
+      ]
+    },
     "/Users/francisalbores/Work/riyori-web-next/src/app/product/product.module.css#": {
       "id": "null",
       "name": "default",
@@ -1146,7 +1167,7 @@
       "id": "(app-client)/./src/components/quantityField.tsx",
       "name": "*",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1154,7 +1175,7 @@
       "id": "(app-client)/./src/components/quantityField.tsx",
       "name": "",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1162,7 +1183,7 @@
       "id": "(app-client)/./src/components/quantityField.tsx",
       "name": "default",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1170,7 +1191,7 @@
       "id": "(app-client)/./src/components/subinnerpage.tsx",
       "name": "*",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1178,7 +1199,7 @@
       "id": "(app-client)/./src/components/subinnerpage.tsx",
       "name": "",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1186,7 +1207,7 @@
       "id": "(app-client)/./src/components/subinnerpage.tsx",
       "name": "default",
       "chunks": [
-        "app/product/page:static/chunks/app/product/page.js"
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     },
@@ -1211,6 +1232,37 @@
       "name": "default",
       "chunks": [
         "app/product/page:static/chunks/app/product/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/checkout.module.css#": {
+      "id": "null",
+      "name": "default",
+      "chunks": [
+        "static/css/app/checkout/page.css"
+      ]
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/page.tsx": {
+      "id": "(app-client)/./src/app/checkout/page.tsx",
+      "name": "*",
+      "chunks": [
+        "app/checkout/page:static/chunks/app/checkout/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/page.tsx#": {
+      "id": "(app-client)/./src/app/checkout/page.tsx",
+      "name": "",
+      "chunks": [
+        "app/checkout/page:static/chunks/app/checkout/page.js"
+      ],
+      "async": false
+    },
+    "/Users/francisalbores/Work/riyori-web-next/src/app/checkout/page.tsx#default": {
+      "id": "(app-client)/./src/app/checkout/page.tsx",
+      "name": "default",
+      "chunks": [
+        "app/checkout/page:static/chunks/app/checkout/page.js"
       ],
       "async": false
     }

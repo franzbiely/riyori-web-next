@@ -4,7 +4,7 @@ import { IconButton, TextField, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const QuantityField = () => {
+const QuantityField = ({ fontSize }) => {
   const [quantity, setQuantity] = useState(10);
 
   const handleIncrement = () => {
@@ -23,7 +23,7 @@ const QuantityField = () => {
         display:'inline-block',
         padding: '5px',
         borderRadius:'20px',
-        fontSize: '16px'
+        fontSize: fontSize || '16px'
       }}>
       <IconButton onClick={handleDecrement} sx={{
         padding: '0px 5px',

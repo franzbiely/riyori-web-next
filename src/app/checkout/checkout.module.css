@@ -1,0 +1,28 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    column-gap: 10px;
+    margin-bottom: 10px;
+}
+.item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border:1px solid #cdcdcd;
+    border-radius: 15px;
+    padding: 8px 5px;
+    margin: 10px 0 0;
+}
+.item img{
+    object-fit:cover;
+    border-radius: 20px;
+}
+.item_meta {
+    font-size:14px;
+}
+.item_meta button{
+    font-size: 10px;
+}
+.item_meta .quantity-field{
+    font-size: 10px;
+}
