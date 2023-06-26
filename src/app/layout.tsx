@@ -14,7 +14,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <head>
+        <title>Ryori</title>
+      </head>
+      <body style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center'
+      }}>
+        <div style={{
+          width:400,
+          
+        }}>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

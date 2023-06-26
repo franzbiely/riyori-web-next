@@ -1,22 +1,41 @@
+"use client"
+
 // This is the 3rd page Menu screen
 import Innerpage from '@/components/innerpage';
 import Search from '@/components/search';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import styles from "./menu.module.css";
 
+interface Category_i {
+    id: number,
+    title: string,
+    photo: string,
+    createdAt: string,
+}
 export default function Menu() {
+    const getAll = async () => {
+        const response = await fetch('http://localhost:3000/menuCategory');
+        const data = await response.json();
+        setCategories(data)
+    }
+    const [categories, setCategories] = useState([])
+    useEffect(() => {
+        getAll();
+    },[])
     return (
         <Innerpage>
             <Search />
             <br />
             <h4>Categories</h4>
             <ul className={styles.menu_list}>
-                {[1,2,3,4,5,6].map((category, key) => (
+                {categories.map((category: Category_i) => (
                         <li className={styles.menu_item}>
-                            {/* <Link to="/category"> */}
+                            <Link href={'/category?id=' + category.id}>
                                 <Image className='image' src="/images/sample-chicken.png" alt="Ryori" width={143} height={65} />
-                                <h6>Chicken</h6>
-                            {/* </Link> */}
+                                <h6>{category.title}</h6>
+                            </Link>
                         </li>
                     ))
                 }
