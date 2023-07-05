@@ -37,6 +37,7 @@
     min-height: 100vh;
     color: var(--color-secondary);
     padding: 15px;
+    padding-bottom: 100px;
     position: relative;
 }
 .header {
@@ -58,6 +59,9 @@
     background-clip: border-box;
     -webkit-background-size: auto auto;
     background-size: auto auto;
+    max-width:370px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .footer .column{
     display: flex;

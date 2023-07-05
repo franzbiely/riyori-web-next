@@ -12,6 +12,8 @@
   --color-tertiary: #fff;
 
   --fontsize-primary: 20px;
+  --flip: flip;
+  --fadeInDown: fadeInDown;
 }
 .button-primary {
   background-color: var(--color-tertiary);
@@ -39,8 +41,7 @@
 }
 
 body {
-  margin-bottom:100px;
   font-family: 'Quicksand', sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: #fff;
+  background: var(--color-primary);
 }
