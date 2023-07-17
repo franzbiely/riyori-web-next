@@ -3,6 +3,9 @@ import Image from 'next/image';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Subinnerheader({title = ''}) {
+  const handleBack = () => {
+    window && window.history.back();
+  }
   return (    
     <div className={styles.header}>
       
@@ -14,7 +17,7 @@ export default function Subinnerheader({title = ''}) {
             <h4 className={styles.greetings}>{title}</h4>            
           </div>
           <div>
-            <CloseIcon />
+            <CloseIcon style={{cursor:'pointer'}}onClick={handleBack} />
           </div>
       </div>
     </div>

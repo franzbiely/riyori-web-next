@@ -8,6 +8,9 @@ import { useEffect } from 'react';
 
 export default function Splash() {
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        localStorage.setItem('store_Id', urlParams.get('id') || '')
+        localStorage.setItem('branch_Id', urlParams.get('branch') || '')
         const timer = setTimeout(() => {
             window.location.href="/opening"
         }, 2000)

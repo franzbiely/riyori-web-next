@@ -17,23 +17,27 @@ interface Menu_i {
     cookingTime: string,
     createdAt: string,
 }
+const urlParams = new URLSearchParams(window.location.search);
 export default function Category() {
-    const getCurrentCategory = async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-
-        const response = await fetch(`http://localhost:3000/menuCategory/${urlParams.get('id')}`);
-        const data = await response.json();
-        setCurrentCategory(data)
-    }
-    const getAll = async () => {
-        const response = await fetch('http://localhost:3000/menuItem');
-        const data = await response.json();
-        setMenuItem(data)
-    }
     const [menuItem, setMenuItem] = useState([])
     const [currentCategory, setCurrentCategory] = useState({
         title:''
     })
+
+    const getCurrentCategory = async () => {
+        
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/menuCategory/${urlParams.get('id')}`);
+        const data = await response.json();
+        setCurrentCategory(data)
+    }
+    const getAll = async () => {
+        const branch_Id = localStorage.getItem('branch_Id')
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branchItem/?branch_Id=${branch_Id}&category_Id=${urlParams.get('id')}`);
+        const data = await response.json();
+        setMenuItem(data)
+    }
+    
 
     useEffect(() => {
         getCurrentCategory();
@@ -48,15 +52,15 @@ export default function Category() {
             <ul className={styles.categories}>
                 {menuItem.map((item: Menu_i) => (
                         <li className={styles.category}>
-                            <Link href="/category">
-                            <Image className='image' src='/images/sample-chicken.png' alt="Ryori" width={90} height={90} />
-                            <div className={styles.category_meta}>
-                                <h6>{item.title}</h6>
-                                <small>P{item.price}</small>
-                                <button 
-                                    // onClick={handleClick} 
-                                className="button-secondary">Add to Basket</button>
-                            </div>
+                            <Link href={`/product/?id=${item.id}`}>
+                                <Image className='image' src={item.photo} alt="Ryori" width={90} height={90} />
+                                <div className={styles.category_meta}>
+                                    <h6>{item.title}</h6>
+                                    <small>P{item.price}</small>
+                                    <button 
+                                        // onClick={handleClick} 
+                                    className="button-secondary">Add to Basket</button>
+                                </div>
                             </Link>
                         </li>
                     ))

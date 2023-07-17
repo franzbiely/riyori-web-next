@@ -16,7 +16,7 @@ interface Category_i {
 }
 export default function Menu() {
     const getAll = async () => {
-        const response = await fetch('http://localhost:3000/menuCategory');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/menuCategory?store_Id=${localStorage.getItem('store_Id')}`);
         const data = await response.json();
         setCategories(data)
     }
@@ -33,7 +33,7 @@ export default function Menu() {
                 {categories.map((category: Category_i) => (
                         <li className={styles.menu_item}>
                             <Link href={'/category?id=' + category.id}>
-                                <Image className='image' src="/images/sample-chicken.png" alt="Ryori" width={143} height={65} />
+                                <Image className='image' src={category.photo} alt={category.title} width={143} height={65} />
                                 <h6>{category.title}</h6>
                             </Link>
                         </li>
