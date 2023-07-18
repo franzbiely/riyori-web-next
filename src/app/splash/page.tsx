@@ -5,14 +5,17 @@ import 'animate.css'
 import styles from "./splash.module.css";
 import { useEffect } from 'react';
 
-
+var Window = {location:{search:'', href: ''}}
+if(typeof window !== 'undefined') {
+    Window = window
+}
 export default function Splash() {
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(Window.location.search);
         localStorage.setItem('store_Id', urlParams.get('id') || '')
         localStorage.setItem('branch_Id', urlParams.get('branch') || '')
         const timer = setTimeout(() => {
-            window.location.href="/opening"
+            Window.location.href="/opening"
         }, 2000)
         return () => clearTimeout(timer);
     }, [])

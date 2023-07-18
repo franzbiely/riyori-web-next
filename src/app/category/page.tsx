@@ -17,7 +17,11 @@ interface Menu_i {
     cookingTime: string,
     createdAt: string,
 }
-const urlParams = new URLSearchParams(window.location.search);
+var Window = {location:{search:'', href: ''}}
+if(typeof window !== 'undefined') {
+    Window = window
+}
+const urlParams = new URLSearchParams(Window.location.search);
 export default function Category() {
     const [menuItem, setMenuItem] = useState([])
     const [currentCategory, setCurrentCategory] = useState({
