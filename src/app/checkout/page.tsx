@@ -6,40 +6,125 @@ import Search from '@/components/search';
 import Subinnerpage from '@/components/subinnerpage';
 import Table from '@/components/table';
 import TextField from '@mui/material/TextField';
+import { init } from 'next/dist/compiled/@vercel/og/satori';
 import Image from 'next/image';
+import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./checkout.module.css";
+interface i_Cart {
+    id: number
+    quantity: number,
+    price: number
+}
+const i_Cart_default = {
+    id: -1,
+    quantity: 0,
+    price: 0
+}
+var Window = {location:{search:'', href: ''}}
+if(typeof window !== 'undefined') {
+    Window = window
+}
 
 export default function Checkout() {
+    const [cart, setCart] = useState<i_Cart[] | []>([i_Cart_default])
+    const [notes, setNotes] = useState('')
+    const [total, setTotal] = useState(0)
+
     const inputStyles = {
         borderRadius: '15px',
     };
+    
+    const init = async () => {
+        const lcData = JSON.parse(localStorage.getItem('orders') || '[]')
+        const ids = lcData.map((item: any) => (item.id)).join(',')
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/menuItem/batch?ids=${ids}`);
+
+        const data = await response.json();
+        const newData = data.map((item:any) => {
+            return {
+                ...item,
+                quantity: lcData.find((i:any) => i.id === item.id).quantity
+            }
+        })
+        setCart(newData)
+    }
+    const handleChangeQty = (id:number, qty:number) => {
+        const newCart = [...cart]
+        console.log({newCart, qty, id})
+        if(newCart[id]) {
+            newCart[id].quantity = qty
+            setCart(newCart)
+        }
+    }
+    const handleClick = () => {
+        const newOrdersCache = cart.map(item => {
+            return {
+                id: item.id,
+                quantity: item.quantity
+            }
+        })
+        localStorage.setItem('orders', JSON.stringify(newOrdersCache))
+        localStorage.setItem('orderNotes', notes)
+        Window.location.href='/orders'
+    }
+    const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
+        setNotes(element.currentTarget.value)
+    }
+
+    useEffect(() => {
+        console.log("Side effect 1 called")
+        init();
+    }, [])
+
+    useEffect(() => {
+        if(cart.length > 0) {
+            /* @NOTICE: Spreading `cart` here is necessary since type of the state can not be reduced, 
+            however the type of the value of the state can be, so this is a necessary hack. */
+            const newTotal = [...cart].reduce((prev:number, cur: any) => {
+                return prev + (cur.quantity * cur.price)
+            }, 0)
+            setTotal(newTotal);
+        }
+    }, [cart])
+
+    // useEffect(() => {
+    //     console.log("Side effect 2 called")
+    //     
+        
+    // }, [setCart])
     return (
-        <Subinnerpage>
+        <Subinnerpage title="Checkout">
             <TextField
                 multiline
                 rows={4}
                 variant="outlined"
                 placeholder="Add food notes here..."
+                name="notes"
                 fullWidth
                 sx={{ '& .MuiOutlinedInput-root': inputStyles }}
+                onChange={handleOnChange}
             /> 
             <br />
             <ul className={styles.list}>
-                {[1,2,3,4].map((item, key) => (
-                        <li className={styles.item}>
+                {cart.map((item: any, key) => (
+                        <li className={styles.item} key={key}>
                             {/* <Link to="/item"> */}
-                            <Image className='image' src="/images/sample-chicken.png" alt="Ryori" width={107} height={71} />
+                            <Image className='image' src={item.photo} alt={item.title} width={107} height={71} />
                             <div className={styles.item_meta}>
                                 <div>
-                                    <h6>Chicken Combo 1</h6>
-                                    <small>With riec and drink (12 oz)</small>
+                                    <h6>{item.title}</h6>
+                                    <small>{item.description}</small>
 
                                     <div className={layout.container}>
                                         <div className={`${layout.column} ${layout.f8}`}>
-                                            <QuantityField fontSize={'12px'}/>
+                                            <QuantityField fontSize={'12px'} value={item.quantity} changeEvent={(qty:number) => {
+                                                // console.log("the change Event is fired")
+                                                handleChangeQty(key, qty)
+                                            }}/>
                                         </div>
-                                        <div className={`${layout.column}`}>P250</div>
+                                        <div className={`${layout.column}`}>P{item.price}</div>
                                     </div>
                                 </div>
                             </div>
@@ -53,11 +138,11 @@ export default function Checkout() {
                 <div className={`${layout.column} ${layout.f6}`}>
                     Total
                 </div>
-                <div className={`${layout.column}`}>₱1,270.00</div>
+                <div className={`${layout.column}`}>₱{total}</div>
             </div>
             <br />
             <button 
-                // onClick={handleClick} 
+                onClick={handleClick} 
             className="button-secondary">Checkout</button>
         </Subinnerpage>
     )

@@ -1,19 +1,25 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconButton, TextField, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const QuantityField = ({ fontSize = '16px'}) => {
-  const [quantity, setQuantity] = useState(10);
+const QuantityField = (
+  { fontSize = '16px', changeEvent, value = 1}: 
+  {
+    fontSize?: string,
+    changeEvent?: any,
+    value?: number
+  }
+) => {
 
   const handleIncrement = () => {
-    setQuantity(quantity + 1);
+    changeEvent(value + 1);
   };
 
   const handleDecrement = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
+    if (value > 0) {
+      changeEvent(value - 1);
     }
   };
 
@@ -30,7 +36,7 @@ const QuantityField = ({ fontSize = '16px'}) => {
       }}>
         <RemoveIcon />
       </IconButton>
-      <span>{quantity}</span>
+      <span>{value}</span>
       <IconButton onClick={handleIncrement} sx={{
         padding: '0px 5px'
       }}>

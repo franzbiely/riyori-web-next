@@ -16,6 +16,7 @@ if(typeof window !== 'undefined') {
 }
 
 export default function Product() {
+    const [quantity, setQuantity] = useState(0)
     const [detail, setDetail] = useState<any>({
         photo: ''
     })
@@ -28,7 +29,16 @@ export default function Product() {
         setDetail(data)
     }
     const handleClick = () => {
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        orders.push({
+            id: detail.menuItem.id,
+            quantity
+        })
+        localStorage.setItem('orders', JSON.stringify(orders))
         Window.location.href= "/checkout"
+    }
+    const handleOnChange = (value: number) => {
+        setQuantity(value)
     }
 
     useEffect(() => {
@@ -43,13 +53,13 @@ export default function Product() {
                     <h4>{detail.title}</h4>
                     <small>{detail.description}</small>
                     <br />
-                    <QuantityField />
+                    <QuantityField changeEvent={handleOnChange} value={quantity}/>
                 </div>
                 <div className={`${layout.column} ${layout.right}`}>
                     <h4>P{detail.price}</h4>
                 </div>
             </div>
-            <Table header="Select Add-Ons"/>
+            <Table header="Select Add-Ons" datas={[]}/>
             <br />
             <button 
                 onClick={handleClick} 
