@@ -1,5 +1,6 @@
 import styles from "./layout.module.css";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -12,7 +13,7 @@ export default function Footer() {
             <Image className='image' src="/images/qr-scan.svg" alt="Ryori" width={62} height={62} />          
           </div>
           <div className={styles.column}>
-            <Image className='image' src="/images/basket-grey.svg" alt="Ryori" width={25} height={31} />          
+            <Link href={'/checkout'}><Image className='image' src="/images/basket-grey.svg" alt="Ryori" width={25} height={31} /></Link>
           </div>
       </div>
     </div>

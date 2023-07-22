@@ -6,10 +6,32 @@ import Search from '@/components/search';
 import Subinnerpage from '@/components/subinnerpage';
 import Table from '@/components/table';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./orders.module.css";
 
 export default function Orders() {
+    const [orders, setOrders] = useState()
+    const init = async () => {
+        // TODO: TO continue here....
+        // const lcData = JSON.parse(localStorage.getItem('orders') || '[]')
+        // const ids = lcData.map((item: any) => (item.id)).join(',')
+
+        // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/menuItem/batch?ids=${ids}`);
+
+        // const data = await response.json();
+        // const newData = data.map((item:any) => {
+        //     return {
+        //         ...item,
+        //         quantity: lcData.find((i:any) => i.id === item.id).quantity
+        //     }
+        // })
+        // setCart(newData)
+    }
+    useEffect(() => {
+        console.log("Side effect 1 called")
+        init();
+    }, [])
     return (
         <Subinnerpage title='My Orders'> 
             <br />

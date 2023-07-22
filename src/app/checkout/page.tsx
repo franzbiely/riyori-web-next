@@ -58,15 +58,36 @@ export default function Checkout() {
             setCart(newCart)
         }
     }
-    const handleClick = () => {
+    const handleClick = async () => {
         const newOrdersCache = cart.map(item => {
             return {
                 id: item.id,
-                quantity: item.quantity
+                qty: item.quantity
             }
         })
+        const branch_Id = await localStorage.getItem('branch_Id')
         localStorage.setItem('orders', JSON.stringify(newOrdersCache))
         localStorage.setItem('orderNotes', notes)
+
+        const urlencoded = new URLSearchParams();
+        urlencoded.append("status", 'new');
+        urlencoded.append("branch_Id", branch_Id || '');
+        urlencoded.append("notes", notes);
+
+        newOrdersCache.forEach((item) => {
+            urlencoded.append("item", JSON.stringify(item));
+        })
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pos/transaction`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: urlencoded
+        });
+        const data = await response.json();
+        console.log({data})
+
         Window.location.href='/orders'
     }
     const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
