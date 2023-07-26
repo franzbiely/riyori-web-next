@@ -16,14 +16,13 @@ if(typeof window !== 'undefined') {
 }
 
 export default function Product() {
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState(1)
     const [detail, setDetail] = useState<any>({
         photo: ''
     })
-    
-    const urlParams = new URLSearchParams(Window.location.search);
 
     const getProductDetail = async () => {
+        const urlParams = new URLSearchParams(Window.location.search);
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branchItem/${urlParams.get('id')}`);
         const data = await response.json();
         setDetail(data)

@@ -21,7 +21,7 @@ var Window = {location:{search:'', href: ''}}
 if(typeof window !== 'undefined') {
     Window = window
 }
-const urlParams = new URLSearchParams(Window.location.search);
+
 export default function Category() {
     const [menuItem, setMenuItem] = useState([])
     const [currentCategory, setCurrentCategory] = useState({
@@ -29,13 +29,14 @@ export default function Category() {
     })
 
     const getCurrentCategory = async () => {
-        
+        const urlParams = new URLSearchParams(Window.location.search);        
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/menuCategory/${urlParams.get('id')}`);
         const data = await response.json();
         setCurrentCategory(data)
     }
     const getAll = async () => {
+        const urlParams = new URLSearchParams(Window.location.search);
         const branch_Id = localStorage.getItem('branch_Id')
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branchItem/?branch_Id=${branch_Id}&category_Id=${urlParams.get('id')}`);
         const data = await response.json();

@@ -14,6 +14,7 @@ export default function Splash() {
         const urlParams = new URLSearchParams(Window.location.search);
         localStorage.setItem('store_Id', urlParams.get('id') || '')
         localStorage.setItem('branch_Id', urlParams.get('branch') || '')
+        localStorage.setItem('table_Id', urlParams.get('table') || '')
         const timer = setTimeout(() => {
             Window.location.href="/opening"
         }, 2000)

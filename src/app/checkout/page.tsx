@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./checkout.module.css";
+import Link from 'next/link';
 interface i_Cart {
     id: number
     quantity: number,
@@ -66,13 +67,16 @@ export default function Checkout() {
             }
         })
         const branch_Id = await localStorage.getItem('branch_Id')
+        const table_Id = await localStorage.getItem('table_Id')
         localStorage.setItem('orders', JSON.stringify(newOrdersCache))
         localStorage.setItem('orderNotes', notes)
+        
 
         const urlencoded = new URLSearchParams();
         urlencoded.append("status", 'new');
         urlencoded.append("branch_Id", branch_Id || '');
         urlencoded.append("notes", notes);
+        urlencoded.append("table", table_Id || '');
 
         newOrdersCache.forEach((item) => {
             urlencoded.append("item", JSON.stringify(item));
@@ -88,10 +92,15 @@ export default function Checkout() {
         const data = await response.json();
         console.log({data})
 
-        Window.location.href='/orders'
+        localStorage.setItem('transaction_Id', data.id)
+
+        Window.location.href=`/orders/`
     }
     const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
         setNotes(element.currentTarget.value)
+    }
+    const handleAddMore = () => {
+        Window.location.href = `/menu`
     }
 
     useEffect(() => {
@@ -162,6 +171,9 @@ export default function Checkout() {
                 <div className={`${layout.column}`}>₱{total}</div>
             </div>
             <br />
+            <button onClick={handleAddMore}
+            className="button-primary">Add More</button>
+            <br /><br />
             <button 
                 onClick={handleClick} 
             className="button-secondary">Checkout</button>

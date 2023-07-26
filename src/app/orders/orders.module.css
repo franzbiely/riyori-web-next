@@ -1,3 +1,14 @@
+.new {
+    border-radius: 10px;
+    color: #333;
+    font-size: 10px;
+    padding:8px 15px;
+    float: right;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    background-color: #aaa;
+}
 .preparing {
     border-radius: 10px;
     color: #fff;

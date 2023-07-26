@@ -1,5 +1,5 @@
 // 7th
-
+"use client"
 import Innerpage from '@/components/innerpage';
 import QuantityField from '@/components/quantityField';
 import Search from '@/components/search';
@@ -10,26 +10,49 @@ import { useEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./orders.module.css";
 
+interface i_TransactionItem {
+    branchId:  number,
+    createdAt: Date,
+    id: number,
+    quantity: number,
+    status: string,
+    menuItem:  {
+        title: string
+    }
+}
+
+
+var Window = {location:{search:'', href: ''}}
+if(typeof window !== 'undefined') {
+    Window = window
+}
+
+
 export default function Orders() {
-    const [orders, setOrders] = useState()
+    const [tableNumber, setTableNumber] = useState('0')
+    const [ordersUi, setOrdersUi] = useState([])
     const init = async () => {
-        // TODO: TO continue here....
-        // const lcData = JSON.parse(localStorage.getItem('orders') || '[]')
-        // const ids = lcData.map((item: any) => (item.id)).join(',')
+        const transaction_Id = localStorage.getItem('transaction_Id')
+        const table_Id = localStorage.getItem('table_Id') || ''
 
-        // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/menuItem/batch?ids=${ids}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/${transaction_Id}`);
+        const data = await response.json();
+        console.log({data})
+        setTableNumber(table_Id)
 
-        // const data = await response.json();
-        // const newData = data.map((item:any) => {
-        //     return {
-        //         ...item,
-        //         quantity: lcData.find((i:any) => i.id === item.id).quantity
-        //     }
-        // })
-        // setCart(newData)
+        const newOrdersUi = data.transactionItem.map((item:i_TransactionItem) => {
+            return {
+                col1: item.quantity, 
+                col2: item.menuItem.title, 
+                col3: (<span className={styles[item.status]}>{item.status.toLocaleUpperCase()}</span>)
+            }
+        })
+        setOrdersUi(newOrdersUi)
+    }
+    const handleClick = () => {
+        Window.location.href='/summary'
     }
     useEffect(() => {
-        console.log("Side effect 1 called")
         init();
     }, [])
     return (
@@ -38,21 +61,16 @@ export default function Orders() {
             <div className={styles.orders}>
                 <h3>
                     <span className={styles.statusIndicator}></span>
-                    Table 7</h3>
+                    On Queue</h3>
                     <div className={styles.order}>
                         <Table
-                        header={''}
-                        datas={[
-                            {col1: '1', col2: 'Chicken Combo 1', col3: (<span className={styles.preparing}>Preparing</span>)},
-                            {col1: '1', col2: 'Fish Combo 1', col3: (<span className={styles.served}>Served</span>)},
-                            {col1: '2', col2: 'Pork Combo 1', col3: (<span className={styles.serving}>Serving</span>)},
-                            {col1: '1', col2: 'Beef Combo 1', col3: (<span className={styles.preparing}>Preparing</span>)}
-                        ]}/>
+                        header={`Table ${tableNumber}`}
+                        datas={ordersUi}/>
                     </div>
             </div>
             <br />
             <button 
-                // onClick={handleClick} 
+                onClick={handleClick} 
             className="button-secondary">Ready to Pay</button>
         </Subinnerpage>
     )
