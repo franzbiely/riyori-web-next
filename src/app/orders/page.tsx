@@ -5,21 +5,13 @@ import QuantityField from '@/components/quantityField';
 import Search from '@/components/search';
 import Subinnerpage from '@/components/subinnerpage';
 import Table from '@/components/table';
+import { i_TransactionItem } from '@/utils/types';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./orders.module.css";
 
-interface i_TransactionItem {
-    branchId:  number,
-    createdAt: Date,
-    id: number,
-    quantity: number,
-    status: string,
-    menuItem:  {
-        title: string
-    }
-}
+
 
 
 var Window = {location:{search:'', href: ''}}

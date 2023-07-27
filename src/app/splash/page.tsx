@@ -29,6 +29,11 @@ export default function Splash() {
             console.log(data.status)
             if(data.status === 'new') {
                 setTimeout(() => {
+                    Window.location.href="/confirm"
+                }, 2000)
+            }
+            else if(data.status === 'to_prepare') {
+                setTimeout(() => {
                     Window.location.href="/orders"
                 }, 2000)
             }

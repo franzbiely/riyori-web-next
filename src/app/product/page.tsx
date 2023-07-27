@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./product.module.css";
+import {renderImage} from "./../../utils/utils"
 
 var Window = {location:{search:'', href: ''}}
 if(typeof window !== 'undefined') {
@@ -28,11 +29,18 @@ export default function Product() {
         setDetail(data)
     }
     const handleClick = () => {
+        const urlParams = new URLSearchParams(Window.location.search);
         const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-        orders.push({
-            id: detail.menuItem.id,
-            quantity
-        })
+        const indexIfExist = orders.findIndex((item:any) => item.id === parseInt(urlParams.get('id') || ''));
+        if(indexIfExist !== -1) {
+            orders[indexIfExist].qty += quantity
+        }
+        else {
+            orders.push({
+                id: detail.menuItem.id,
+                qty: quantity
+            })
+        }
         localStorage.setItem('orders', JSON.stringify(orders))
         Window.location.href= "/checkout"
     }
@@ -45,7 +53,7 @@ export default function Product() {
     },[])
     return (
         <Subinnerpage title="">
-            <Image className={styles.featured_image} src={detail?.photo} alt="Ryori" width={283} height={192} />
+            <Image className={styles.featured_image} src={renderImage(detail?.photo)} alt="Ryori" width={283} height={192} />
             <br />
             <div className={layout.container}>
                 <div className={`${layout.column} ${layout.f6}`}>

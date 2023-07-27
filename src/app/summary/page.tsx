@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./summary.module.css";
+import {renderImage} from "./../../utils/utils"
 
 var Window = {location:{search:'', href: ''}}
 if(typeof window !== 'undefined') {
@@ -65,7 +66,7 @@ export default function Summary() {
                 {orders.map((item, key) => (
                         <li className={`${styles.item} ${layout.container}`}>
                             {/* <Link to="/item"> */}
-                            <Image className={`${styles.image} ${layout.column} ${layout.f2}`} src={item.photo} alt="Ryori" width={45} height={35} />
+                            <Image className={`${styles.image} ${layout.column} ${layout.f2}`} src={renderImage(item?.photo)} alt="Ryori" width={45} height={35} />
                             <div className={`${styles.qty} ${layout.column} ${layout.f1}`}>
                                 {item.quantity} x
                             </div>

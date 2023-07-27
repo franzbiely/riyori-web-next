@@ -12,6 +12,7 @@ import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react';
 import layout from './../../components/layout.module.css';
 import styles from "./checkout.module.css";
 import Link from 'next/link';
+import {formatCurrency, renderImage} from "./../../utils/utils"
 interface i_Cart {
     id: number
     quantity: number,
@@ -46,16 +47,25 @@ export default function Checkout() {
         const newData = data.map((item:any) => {
             return {
                 ...item,
-                quantity: lcData.find((i:any) => i.id === item.id).quantity
+                quantity: lcData.find((i:any) => i.id === item.id).qty
             }
         })
         setCart(newData)
     }
     const handleChangeQty = (id:number, qty:number) => {
         const newCart = [...cart]
-        console.log({newCart, qty, id})
         if(newCart[id]) {
             newCart[id].quantity = qty
+
+            const newOrdersCache = newCart.map(item => {
+                return {
+                    id: item.id,
+                    qty: item.quantity
+                }
+            })
+            console.log('here I am', newOrdersCache)
+            localStorage.setItem('orders', JSON.stringify(newOrdersCache))
+
             setCart(newCart)
         }
     }
@@ -94,7 +104,7 @@ export default function Checkout() {
 
         localStorage.setItem('transaction_Id', data.id)
 
-        Window.location.href=`/orders/`
+        Window.location.href=`/confirm`
     }
     const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
         setNotes(element.currentTarget.value)
@@ -126,22 +136,12 @@ export default function Checkout() {
     // }, [setCart])
     return (
         <Subinnerpage title="Checkout">
-            <TextField
-                multiline
-                rows={4}
-                variant="outlined"
-                placeholder="Add food notes here..."
-                name="notes"
-                fullWidth
-                sx={{ '& .MuiOutlinedInput-root': inputStyles }}
-                onChange={handleOnChange}
-            /> 
-            <br />
+            
             <ul className={styles.list}>
                 {cart.map((item: any, key) => (
                         <li className={styles.item} key={key}>
                             {/* <Link to="/item"> */}
-                            <Image className='image' src={item.photo} alt={item.title} width={107} height={71} />
+                            <Image className='image' src={renderImage(item.photo)} alt={item.title} width={107} height={71} />
                             <div className={styles.item_meta}>
                                 <div>
                                     <h6>{item.title}</h6>
@@ -154,7 +154,7 @@ export default function Checkout() {
                                                 handleChangeQty(key, qty)
                                             }}/>
                                         </div>
-                                        <div className={`${layout.column}`}>P{item.price}</div>
+                                        <div className={`${layout.column}`}>{formatCurrency(item.price)}</div>
                                     </div>
                                 </div>
                             </div>
@@ -164,11 +164,24 @@ export default function Checkout() {
                 }
             </ul>
             <br />
+            <h4>Add notes for the chef.</h4>
+            <small>example: "I alergic to seafoods. Halal only please."</small>
+            <TextField
+                multiline
+                rows={4}
+                variant="outlined"
+                placeholder="Add food notes here..."
+                name="notes"
+                fullWidth
+                sx={{ '& .MuiOutlinedInput-root': inputStyles }}
+                onChange={handleOnChange}
+            /> <br />
+            <br />
             <div className={layout.container}>
                 <div className={`${layout.column} ${layout.f6}`}>
                     Total
                 </div>
-                <div className={`${layout.column}`}>₱{total}</div>
+                <div className={`${layout.column}`}>{formatCurrency(total)}</div>
             </div>
             <br />
             <button onClick={handleAddMore}

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from "./menu.module.css";
-
+import {renderImage} from "./../../utils/utils"
 interface Category_i {
     id: number,
     title: string,
@@ -26,14 +26,15 @@ export default function Menu() {
     },[])
     return (
         <Innerpage>
-            <Search />
+            <br />
+            {/* <Search /> */}
             <br />
             <h4>Categories</h4>
             <ul className={styles.menu_list}>
-                {categories.map((category: Category_i) => (
-                        <li className={styles.menu_item}>
-                            <Link href={'/category?id=' + category.id}>
-                                <Image className='image' src={category.photo} alt={category.title} width={143} height={65} />
+                {categories.map((category: Category_i, key:number) => (
+                        <li className={styles.menu_item} key={key}>
+                            <Link prefetch={false} href={'/category?id=' + category.id}>
+                                <Image className='image' src={renderImage(category.photo)} alt={category.title} width={143} height={65} />
                                 <h6>{category.title}</h6>
                             </Link>
                         </li>
@@ -41,7 +42,7 @@ export default function Menu() {
                 }
             </ul>
             <br />
-            <h4>Add-ons</h4>
+            {/* <h4>Add-ons</h4>
             <ul className={styles.addons_list}>
                 <li>Coffee</li>
                 <li>Coffee</li>
@@ -49,7 +50,7 @@ export default function Menu() {
                 <li>Coffee</li>
                 <li>Coffee</li>
             </ul>
-            <br />
+            <br /> 
             <h4>Top Sellers</h4>
             <ul className={styles.topsellers_list}>
                 {[1,2,3].map((category, key) => (
@@ -65,7 +66,7 @@ export default function Menu() {
                         </li>
                     ))
                 }
-            </ul>
+            </ul>*/}
         </Innerpage>
     )
 }
