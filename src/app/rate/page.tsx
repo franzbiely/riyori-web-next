@@ -43,9 +43,13 @@ export default function Rate() {
         if(data.status === 'awaiting_payment_method') {
             setContent({
                 title: 'Awaiting Payment Method',
-                content: 'Please settle your payment method first.'
+                content: 'Please rescan the QR Code to settle your payment method first.'
             }) 
         }
+        localStorage.removeItem("orders");
+        localStorage.removeItem("branch_Id");
+        localStorage.removeItem("table_Id");
+        localStorage.removeItem("store_Id");
     }
 
     useEffect(() => {
