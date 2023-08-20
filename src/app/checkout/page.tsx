@@ -13,6 +13,8 @@ import layout from './../../components/layout.module.css';
 import styles from "./checkout.module.css";
 import Link from 'next/link';
 import {formatCurrency, renderImage} from "./../../utils/utils"
+import { io } from 'socket.io-client';
+
 interface i_Cart {
     id: number
     quantity: number,
@@ -100,6 +102,13 @@ export default function Checkout() {
             body: urlencoded
         });
         const data = await response.json();
+
+        const socket = io(process.env.NEXT_PUBLIC_API_URL || '')
+        socket.emit('order.new', {
+            "title": `[Table ${table_Id}]: New Order`,
+            "message": `Table ${table_Id} has sent an order!`
+        })
+
         console.log({data})
 
         localStorage.setItem('transaction_Id', data.id)
