@@ -6,6 +6,7 @@ import "animate.css";
 import styles from "./splash.module.css";
 import React, { useState, useEffect } from "react";
 import { init } from "next/dist/compiled/@vercel/og/satori";
+import { decrypt, encrypt, parseQueryStringToObject } from "@/utils/utils";
 
 var Window = { location: { search: "", href: "" } };
 if (typeof window !== "undefined") {
@@ -17,6 +18,8 @@ type Data = {
 };
 
 export default function Splash() {
+  const crypto = require("crypto");
+
   const [productData, setProductData] = useState<Data>({
     photo: "",
   });
@@ -42,9 +45,17 @@ export default function Splash() {
     return new Promise(async (resolve, reject) => {
       const urlParams = new URLSearchParams(Window.location.search);
 
-      const sid = urlParams.get("id") || "";
-      const bid = urlParams.get("branch") || "";
-      const tid = urlParams.get("table") || "";
+      const token = urlParams.get("token") || "";
+      const tokenData = decrypt(token);
+      console.log({ tokenData });
+
+      const queryString = tokenData;
+      const tokenResult = parseQueryStringToObject(queryString);
+      console.log({ tokenResult });
+
+      const sid = tokenResult.id;
+      const bid = tokenResult.branch;
+      const tid = tokenResult.table;
 
       localStorage.setItem("store_Id", sid);
       localStorage.setItem("branch_Id", bid);

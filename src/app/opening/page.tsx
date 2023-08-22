@@ -16,7 +16,6 @@ export default function Opening() {
     photo: "",
   });
 
-  const store = localStorage.getItem("store_Id");
   async function fetchData() {
     try {
       const response = await fetch(
