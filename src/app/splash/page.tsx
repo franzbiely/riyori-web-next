@@ -70,19 +70,26 @@ export default function Splash() {
       if (data.status === "new") {
         setTimeout(() => {
           Window.location.href = "/confirm";
-        }, 2000);
+        }, 500);
       } else if (data.status === "to_prepare") {
         setTimeout(() => {
           Window.location.href = "/orders";
-        }, 2000);
+        }, 500);
+      } else if (data.status === "served") {
+        setTimeout(() => {
+          Window.location.href = "/summary";
+        }, 500);
       } else if (data.status === "awaiting_next_action") {
         setTimeout(() => {
           Window.location.href = "/payment";
-        }, 2000);
+        }, 500);
       } else {
+        localStorage.removeItem("orders");
+        localStorage.removeItem("orderNotes");
+        localStorage.removeItem("transaction_Id");
         setTimeout(() => {
           Window.location.href = "/opening";
-        }, 2000);
+        }, 1000);
       }
     });
   };

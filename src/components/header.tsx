@@ -32,7 +32,6 @@ export default function Header() {
   useEffect(() => {
     fetchStoreImg();
   }, []);
-
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -44,7 +43,12 @@ export default function Header() {
             alt="Ryori"
             width={30}
             height={31}
-            style={{ borderRadius: 100 }}
+            style={{
+              borderRadius: 100,
+              overflow: "hidden",
+              width: "30px",
+              height: "30px",
+            }}
           />
         </div>
         <div className={`${styles.column} ${styles.f8}`}>

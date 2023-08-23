@@ -43,6 +43,7 @@ export default function Rate() {
     const data = await response.json();
     console.log({ data });
     if (data.status === "succeeded") {
+      localStorage.clear();
       setContent({
         title: "Thank you!",
         content: "Thank you very much for your dining experience!",

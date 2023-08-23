@@ -47,7 +47,12 @@ export default function Subinnerheader({ title = "" }) {
             alt="Ryori"
             width={25}
             height={31}
-            style={{ borderRadius: 100 }}
+            style={{
+              borderRadius: 100,
+              overflow: "hidden",
+              width: "30px",
+              height: "30px",
+            }}
           />
         </div>
         <div className={`${styles.column} ${styles.f8}`}>

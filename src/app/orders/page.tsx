@@ -27,7 +27,7 @@ export default function Orders() {
     const table_Id = localStorage.getItem("table_Id") || "";
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/${transaction_Id}`
+      `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/status/?sid=1&bid=1&tid=1`
     );
     const data = await response.json();
     console.log({ data });
