@@ -94,8 +94,8 @@ export default function Splash() {
     <main className={styles.main}>
       <Image
         className={styles.image}
-        // src="/images/ryori-logo-icon.png"
-        src={productData.photo}
+        src="/images/ryori-logo-icon.png"
+        // src={productData.photo}
         alt="Ryori"
         width={136}
         height={165}

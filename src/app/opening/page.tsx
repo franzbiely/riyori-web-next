@@ -6,12 +6,20 @@ import Image from "next/image";
 import "animate.css";
 import styles from "./opening.module.css";
 import Link from "next/link";
+import { Loader } from "@/utils/loader";
 
 type Data = {
   photo: string;
 };
 
+var Window = { location: { search: "", href: "" } };
+if (typeof window !== "undefined") {
+  Window = window;
+}
+
 export default function Opening() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [productData, setProductData] = useState<Data>({
     photo: "",
   });
@@ -37,6 +45,11 @@ export default function Opening() {
     fetchData();
   }, []);
 
+  const handleBtn = () => {
+    setIsLoading(true);
+    Window.location.href = `/menu`;
+  };
+
   return (
     <main className={styles.main}>
       <div className={styles.mainInner}>
@@ -50,9 +63,15 @@ export default function Opening() {
         />
         <br />
         <br />
-        <Link href="/menu">
-          <button className="button-primary">Get Started</button>
-        </Link>
+
+        <button onClick={handleBtn} className="button-primary">
+          {isLoading && (
+            <div>
+              <Loader />
+            </div>
+          )}
+          Get Started
+        </button>
       </div>
     </main>
   );

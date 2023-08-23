@@ -1,12 +1,24 @@
 .category a {
-    display: flex;
-    column-gap: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  column-gap: 10px;
+  margin-bottom: 10px;
 }
-.category img{
-    object-fit:cover;
-    border-radius: 20px;
+.category {
+  margin-bottom: 10px;
 }
-.category_meta button{
-    font-size: 12px;
+.category img {
+  object-fit: cover;
+  border-radius: 20px;
+}
+.category_meta button {
+  font-size: 12px;
+}
+.category_meta {
+  margin-left: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+.btn {
+  flex-direction: row;
+  display: flex;
 }

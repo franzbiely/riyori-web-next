@@ -10,7 +10,8 @@ import Link from "next/link";
 import layout from "./../../components/layout.module.css";
 import styles from "./payment.module.css";
 import TextField from "@mui/material/TextField";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
+import { Loader } from "@/utils/loader";
 
 var Window = { location: { search: "", href: "" } };
 if (typeof window !== "undefined") {
@@ -18,6 +19,8 @@ if (typeof window !== "undefined") {
 }
 
 export default function Payment() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [openGCash, setOpenGCash] = useState(false);
   const [gcashData, setGcashData] = useState({
     phone: "",
@@ -76,6 +79,7 @@ export default function Payment() {
     const data = await response.json();
 
     if (data.redirect) {
+      setIsLoading(true);
       Window.location.href = data.redirect;
     }
   };
@@ -94,6 +98,11 @@ export default function Payment() {
 
   return (
     <Subinnerpage title="Payment">
+      {isLoading && (
+        <div>
+          <Loader />
+        </div>
+      )}
       <br />
       <ul className={styles.list}>
         <Link href="" onClick={toPayCash}>
@@ -146,6 +155,7 @@ export default function Payment() {
           </li>
         </Link>
       </ul>
+
       <br />
       <hr />
       <br />
@@ -189,6 +199,7 @@ export default function Payment() {
       )}
       <br />
       <br />
+
       <button onClick={handlePay} className="button-secondary">
         Pay
       </button>

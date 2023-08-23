@@ -1,13 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "sweetalert2/dist/sweetalert2.min.css";
 
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: #fff;
   --background-end-rgb: #fff;
 
-  --color-primary: #DB1B1B;
+  --color-primary: #db1b1b;
   --color-secondary: #000;
   --color-tertiary: #fff;
 
@@ -41,7 +42,17 @@
 }
 
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   color: rgb(var(--foreground-rgb));
   background: var(--color-primary);
+}
+.swal2-container .swal2-popup {
+  /* background: rgba(255, 255, 255, 0.7); */
+  background: rgba(0, 0, 0, 0.4);
+  height: 100vh;
+  width: 100vh;
+}
+.swal2-backdrop-show {
+  padding: 0;
+  border-radius: 0px;
 }
