@@ -66,12 +66,20 @@ export default function Splash() {
       );
       const data = await response.json();
 
+      const orders = localStorage.getItem("orders") || "";
+
       console.log(data.status);
-      if (data.status === "new") {
+      if (orders.length > 0) {
         setTimeout(() => {
           Window.location.href = "/confirm";
         }, 500);
-      } else if (data.status === "to_prepare") {
+      }
+      //  else if (data.status === "new") {
+      //   setTimeout(() => {
+      //     Window.location.href = "/confirm";
+      //   }, 500);
+      // }
+      else if (data.status === "to_prepare") {
         setTimeout(() => {
           Window.location.href = "/orders";
         }, 500);

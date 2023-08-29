@@ -7,10 +7,23 @@ type Data = {
   photo: string;
 };
 export default function Header() {
+  const [greeting, setGreeting] = useState("");
+
   const table_Id = localStorage.getItem("table_Id");
   const [storeImg, setStoreImg] = useState<Data>({
     photo: "",
   });
+
+  useEffect(() => {
+    const currentTime = new Date().getHours();
+    if (currentTime >= 0 && currentTime < 12) {
+      setGreeting("Good Morning");
+    } else if (currentTime >= 12 && currentTime < 18) {
+      setGreeting("Good Afternoon");
+    } else {
+      setGreeting("Good Evening");
+    }
+  }, []);
 
   async function fetchStoreImg() {
     try {
@@ -53,7 +66,7 @@ export default function Header() {
         </div>
         <div className={`${styles.column} ${styles.f8}`}>
           <h4 className={styles.greetings}>
-            Good morning!
+            {greeting}
             <small>Table {table_Id}</small>
           </h4>
         </div>

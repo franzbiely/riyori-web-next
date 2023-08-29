@@ -7,6 +7,7 @@ import "animate.css";
 import styles from "./opening.module.css";
 import Link from "next/link";
 import { Loader } from "@/utils/loader";
+import ryoriLogo from "../../../public/images/ryori-logo-icon.png";
 
 type Data = {
   photo: string;
@@ -56,7 +57,7 @@ export default function Opening() {
         <Image
           className={styles.image}
           //   src="/images/ryori-brand.png"
-          src={productData.photo}
+          src={productData.photo ? productData.photo : ryoriLogo}
           alt="Ryori"
           width={283}
           height={141}
