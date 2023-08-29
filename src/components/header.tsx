@@ -8,8 +8,7 @@ type Data = {
 };
 export default function Header() {
   const [greeting, setGreeting] = useState("");
-
-  const table_Id = localStorage.getItem("table_Id");
+  const [table_Id, setTableId] = useState<string | null>(null);
   const [storeImg, setStoreImg] = useState<Data>({
     photo: "",
   });
@@ -44,6 +43,10 @@ export default function Header() {
   }
   useEffect(() => {
     fetchStoreImg();
+    const storedTableId = localStorage.getItem("table_Id");
+    if (typeof window !== "undefined" && storedTableId) {
+      setTableId(storedTableId);
+    }
   }, []);
   return (
     <div className={styles.header}>
@@ -67,7 +70,7 @@ export default function Header() {
         <div className={`${styles.column} ${styles.f8}`}>
           <h4 className={styles.greetings}>
             {greeting}
-            <small>Table {table_Id}</small>
+            {table_Id && <small>Table {table_Id}</small>}
           </h4>
         </div>
       </div>

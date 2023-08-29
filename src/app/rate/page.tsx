@@ -129,7 +129,7 @@ export default function Rate() {
             />
             <br />
             <p className={styles.p}>
-              Do you have any thoughts you'd like to share?
+              Do you have any thoughts you&apos;d like to share?
             </p>
             <TextField
               multiline

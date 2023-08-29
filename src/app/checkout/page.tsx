@@ -198,7 +198,9 @@ export default function Checkout() {
       </ul>
       <br />
       <h4>Add notes for the chef.</h4>
-      <small>example: "I alergic to seafoods. Halal only please."</small>
+      <small>
+        example: &quot;I alergic to seafoods. Halal only please.&quot;
+      </small>
       <TextField
         multiline
         rows={4}
