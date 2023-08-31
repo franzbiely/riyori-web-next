@@ -13,7 +13,9 @@ const nextConfig = {
     images: {
       domains: ['ryoriimg.s3.amazonaws.com'],
     },
-    ssr: false,
+    trailingSlash: true,
+
+    // ssr: false,
 }
 
 module.exports = nextConfig
