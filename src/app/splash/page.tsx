@@ -41,17 +41,20 @@ export default function Splash() {
     }
   }
 
+
   const init = async () => {
     return new Promise(async (resolve, reject) => {
       const urlParams = new URLSearchParams(Window.location.search);
 
       const token = urlParams.get("token") || "";
-      const tokenData = decrypt(token);
-      console.log({ tokenData });
+
+      const _tokenData = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/decrypt/${token}`
+      );
+      const tokenData = await _tokenData.text()
 
       const queryString = tokenData;
       const tokenResult = parseQueryStringToObject(queryString);
-      console.log({ tokenResult });
 
       const sid = tokenResult.id;
       const bid = tokenResult.branch;
@@ -67,8 +70,7 @@ export default function Splash() {
       const data = await response.json();
 
       const orders = localStorage.getItem("orders") || "";
-
-      console.log(data.status);
+      
       if (orders.length > 0) {
         setTimeout(() => {
           Window.location.href = "/confirm";
