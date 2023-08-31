@@ -56,7 +56,7 @@ export default function Opening() {
       <div className={styles.mainInner}>
         <Image
           className={styles.image}
-          //   src="/images/ryori-brand.png"
+          // src="/images/ryori-brand.png"
           src={productData.photo ? productData.photo : ryoriLogo}
           alt="Ryori"
           width={283}

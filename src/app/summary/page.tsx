@@ -79,8 +79,8 @@ export default function Summary() {
       )}
       <br />
       <ul className={styles.list}>
-        {orders.map((item, key) => (
-          <li className={`${styles.item} ${layout.container}`}>
+        {orders.map((item: any, key) => (
+          <li className={`${styles.item} ${layout.container}`} key={key}>
             {/* <Link to="/item"> */}
             <Image
               className={`${styles.image} ${layout.column} ${layout.f2}`}
