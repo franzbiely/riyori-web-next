@@ -11,7 +11,7 @@ import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
 
 interface Menu_i {
-  id: number;
+  _id: number;
   title: string;
   photo: string;
   price: string;
@@ -61,7 +61,7 @@ export default function Category() {
 
   const handleBtn = (item: number) => {
     setIsLoading(true);
-    Window.location.href = "product/?id=" + item;
+    Window.location.href = "../product/?id=" + item;
     // setIsLoading(false);
   };
 
@@ -75,7 +75,7 @@ export default function Category() {
       <ul className={styles.categories}>
         {menuItem.map((item: Menu_i, key: number) => (
           <li className={styles.category} key={key}>
-            <button className={styles.btn} onClick={() => handleBtn(item.id)}>
+            <button className={styles.btn} onClick={() => handleBtn(item._id)}>
               {/* <Link href={`/product/?id=${item.id}`}> */}
               {isLoading && (
                 <div>
@@ -84,7 +84,8 @@ export default function Category() {
               )}
               <Image
                 className="image"
-                src={renderImage(item.photo ? item.photo : imagePlaceholder)}
+                src={imagePlaceholder}
+                // src={renderImage(item.photo ? item.photo : imagePlaceholder)}
                 alt="Ryori"
                 width={90}
                 height={90}

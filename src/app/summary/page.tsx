@@ -84,7 +84,8 @@ export default function Summary() {
             {/* <Link to="/item"> */}
             <Image
               className={`${styles.image} ${layout.column} ${layout.f2}`}
-              src={renderImage(item?.photo ? item.photo : imagePlaceholder)}
+              src={imagePlaceholder}
+              // src={renderImage(item?.photo ? item.photo : imagePlaceholder)}
               alt="Ryori"
               width={45}
               height={35}

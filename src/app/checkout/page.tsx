@@ -18,12 +18,12 @@ import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
 
 interface i_Cart {
-  id: number;
+  _id: number;
   quantity: number;
   price: number;
 }
 const i_Cart_default = {
-  id: -1,
+  _id: -1,
   quantity: 0,
   price: 0,
 };
@@ -45,7 +45,7 @@ export default function Checkout() {
 
   const init = async () => {
     const lcData = JSON.parse(localStorage.getItem("orders") || "[]");
-    const ids = lcData.map((item: any) => item.id).join(",");
+    const ids = lcData.map((item: any) => item._id).join(",");
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/menuItem/batch?ids=${ids}`
@@ -55,19 +55,19 @@ export default function Checkout() {
     const newData = data.map((item: any) => {
       return {
         ...item,
-        quantity: lcData.find((i: any) => i.id === item.id).qty,
+        quantity: lcData.find((i: any) => i._id === item._id).qty,
       };
     });
     setCart(newData);
   };
-  const handleChangeQty = (id: number, qty: number) => {
+  const handleChangeQty = (_id: number, qty: number) => {
     const newCart = [...cart];
-    if (newCart[id]) {
-      newCart[id].quantity = qty;
+    if (newCart[_id]) {
+      newCart[_id].quantity = qty;
 
       const newOrdersCache = newCart.map((item) => {
         return {
-          id: item.id,
+          _id: item._id,
           qty: item.quantity,
         };
       });
@@ -80,7 +80,7 @@ export default function Checkout() {
   const handleClick = async () => {
     const newOrdersCache = cart.map((item) => {
       return {
-        id: item.id,
+        _id: item._id,
         qty: item.quantity,
       };
     });
@@ -120,6 +120,8 @@ export default function Checkout() {
     console.log({ data });
 
     localStorage.setItem("transaction_Id", data.id);
+    localStorage.removeItem("orders");
+    localStorage.removeItem("orderNotes");
     setIsLoading(true);
     Window.location.href = `/confirm`;
   };
@@ -165,7 +167,8 @@ export default function Checkout() {
             {/* <Link to="/item"> */}
             <Image
               className="image"
-              src={renderImage(item.photo ? item.photo : imagePlaceholder)}
+              src={imagePlaceholder}
+              // src={renderImage(item.photo ? item.photo : imagePlaceholder)}
               alt={item.title}
               width={107}
               height={71}

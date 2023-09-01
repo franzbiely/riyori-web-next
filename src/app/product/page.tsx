@@ -44,7 +44,7 @@ export default function Product() {
       orders[indexIfExist].qty += quantity;
     } else {
       orders.push({
-        id: detail.menuItem.id,
+        _id: detail.menuItem._id,
         qty: quantity,
       });
     }
@@ -68,7 +68,8 @@ export default function Product() {
       )}
       <Image
         className={styles.featured_image}
-        src={renderImage(detail?.photo ? detail.photo : imagePlaceholder)}
+        src={imagePlaceholder}
+        // src={renderImage(detail?.photo ? detail.photo : imagePlaceholder)}
         alt="Ryori"
         width={283}
         height={192}
@@ -82,10 +83,10 @@ export default function Product() {
           <QuantityField changeEvent={handleOnChange} value={quantity} />
         </div>
         <div className={`${layout.column} ${layout.right}`}>
-          <h4>P{detail.price}</h4>
+          <h4>₱{detail.price}</h4>
         </div>
       </div>
-      <Table header="Select Add-Ons" datas={[]} />
+      {/* <Table header="Select Add-Ons" datas={[]} /> */}
       <br />
       <button onClick={handleClick} className="button-secondary">
         Add To Order

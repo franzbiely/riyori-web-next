@@ -41,7 +41,6 @@ export default function Splash() {
     }
   }
 
-
   const init = async () => {
     return new Promise(async (resolve, reject) => {
       const urlParams = new URLSearchParams(Window.location.search);
@@ -51,7 +50,7 @@ export default function Splash() {
       const _tokenData = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/decrypt/${token}`
       );
-      const tokenData = await _tokenData.text()
+      const tokenData = await _tokenData.text();
 
       const queryString = tokenData;
       const tokenResult = parseQueryStringToObject(queryString);
@@ -70,7 +69,7 @@ export default function Splash() {
       const data = await response.json();
 
       const orders = localStorage.getItem("orders") || "";
-      
+
       if (orders.length > 0) {
         setTimeout(() => {
           Window.location.href = "/confirm";
@@ -111,8 +110,8 @@ export default function Splash() {
     <main className={styles.main}>
       <Image
         className={styles.image}
-        src="/images/ryori-logo-icon.png"
-        // src={productData.photo}
+        // src="/images/ryori-logo-icon.png"
+        src={productData.photo}
         alt="Ryori"
         width={136}
         height={165}

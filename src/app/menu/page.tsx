@@ -12,7 +12,7 @@ import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
 
 interface Category_i {
-  id: number;
+  _id: number;
   title: string;
   photo: string;
   createdAt: string;
@@ -51,7 +51,7 @@ export default function Menu() {
       <ul className={styles.menu_list}>
         {categories.map((category: Category_i, key: number) => (
           <li className={styles.menu_item} key={key}>
-            <button onClick={() => handleBtn(category.id)}>
+            <button onClick={() => handleBtn(category._id)}>
               {/* <Link prefetch={false} href={"/category?id=" + category.id}> */}
               {isLoading && (
                 <div>
@@ -60,9 +60,10 @@ export default function Menu() {
               )}
               <Image
                 className="image"
-                src={renderImage(
-                  category.photo ? category.photo : imagePlaceholder
-                )}
+                src={imagePlaceholder}
+                // src={renderImage(
+                //   category.photo ? category.photo : imagePlaceholder
+                // )}
                 alt={category.title}
                 width={143}
                 height={65}

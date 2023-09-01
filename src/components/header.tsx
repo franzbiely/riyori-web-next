@@ -54,8 +54,8 @@ export default function Header() {
         <div className={styles.column}>
           <Image
             className="image"
-            // src="/images/ryori-logo-red-small.png"
-            src={storeImg.photo ? storeImg.photo : ryoriLogo}
+            src="/images/ryori-logo-red-small.png"
+            // src={storeImg.photo ? storeImg.photo : ryoriLogo}
             alt="Ryori"
             width={30}
             height={31}

@@ -43,7 +43,8 @@ export default function Subinnerheader({ title = "" }) {
         <div className={styles.column}>
           <Image
             className="image"
-            src={storeImg.photo ? storeImg.photo : ryoriLogo}
+            src={ryoriLogo}
+            // src={storeImg.photo ? storeImg.photo : ryoriLogo}
             alt="Ryori"
             width={25}
             height={31}

@@ -195,14 +195,15 @@ export default function Payment() {
             sx={{ "& .MuiOutlinedInput-root": inputStyles }}
             onChange={handleOnChange}
           />
+          <br />
+          <br />
+          <button onClick={handlePay} className="button-secondary">
+            Pay
+          </button>
         </>
       )}
       <br />
       <br />
-
-      <button onClick={handlePay} className="button-secondary">
-        Pay
-      </button>
     </Subinnerpage>
   );
 }

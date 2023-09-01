@@ -23,7 +23,6 @@ export default function Orders() {
   const [tableNumber, setTableNumber] = useState("0");
   const [ordersUi, setOrdersUi] = useState([]);
   const init = async () => {
-    const transaction_Id = localStorage.getItem("transaction_Id");
     const table_Id = localStorage.getItem("table_Id") || "";
     const store_Id = localStorage.getItem("store_Id") || "";
     const branch_Id = localStorage.getItem("branch_Id") || "";
@@ -32,8 +31,10 @@ export default function Orders() {
       `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/status/?sid=${store_Id}&bid=${branch_Id}&tid=${table_Id}`
     );
     const data = await response.json();
-    console.log({ data });
     setTableNumber(table_Id);
+
+    const transaction_Id = data._id;
+    localStorage.setItem("transaction_Id", transaction_Id);
 
     const newOrdersUi = data.transactionItem.map((item: i_TransactionItem) => {
       return {
