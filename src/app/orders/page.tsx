@@ -55,6 +55,7 @@ export default function Orders() {
   };
   useEffect(() => {
     init();
+    setIsLoading(false);
   }, []);
   return (
     <Subinnerpage title="My Orders">

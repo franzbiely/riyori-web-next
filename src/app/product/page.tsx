@@ -58,6 +58,7 @@ export default function Product() {
 
   useEffect(() => {
     getProductDetail();
+    setIsLoading(false);
   }, []);
   return (
     <Subinnerpage title="">

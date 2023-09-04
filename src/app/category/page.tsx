@@ -57,6 +57,7 @@ export default function Category() {
   useEffect(() => {
     getCurrentCategory();
     getAll();
+    setIsLoading(false);
   }, []);
 
   const handleBtn = (item: number) => {

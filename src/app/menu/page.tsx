@@ -36,12 +36,14 @@ export default function Menu() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     getAll();
+    setIsLoading(false);
   }, []);
 
   const handleBtn = (category: number) => {
     setIsLoading(true);
     Window.location.href = "/category?id=" + category;
   };
+
   return (
     <Innerpage>
       <br />
@@ -65,7 +67,7 @@ export default function Menu() {
                 //   category.photo ? category.photo : imagePlaceholder
                 // )}
                 alt={category.title}
-                width={143}
+                width={160}
                 height={65}
               />
               <h6>{category.title}</h6>

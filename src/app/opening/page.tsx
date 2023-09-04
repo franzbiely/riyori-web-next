@@ -44,6 +44,7 @@ export default function Opening() {
   }
   useEffect(() => {
     fetchData();
+    setIsLoading(false);
   }, []);
 
   const handleBtn = () => {
