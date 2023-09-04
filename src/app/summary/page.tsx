@@ -56,6 +56,7 @@ export default function Summary() {
   };
   useEffect(() => {
     init();
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
