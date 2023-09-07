@@ -139,6 +139,13 @@ export default function Checkout() {
   }, []);
 
   useEffect(() => {
+    setIsLoading(false);
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
+
+  useEffect(() => {
     if (cart.length > 0) {
       /* @NOTICE: Spreading `cart` here is necessary since type of the state can not be reduced, 
             however the type of the value of the state can be, so this is a necessary hack. */

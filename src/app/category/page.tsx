@@ -57,7 +57,6 @@ export default function Category() {
   useEffect(() => {
     getCurrentCategory();
     getAll();
-    setIsLoading(false);
   }, []);
 
   const handleBtn = (item: number) => {
@@ -65,6 +64,13 @@ export default function Category() {
     Window.location.href = "../product/?id=" + item;
     // setIsLoading(false);
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
 
   return (
     <Innerpage>

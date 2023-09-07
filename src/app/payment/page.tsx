@@ -84,6 +84,13 @@ export default function Payment() {
     }
   };
 
+  useEffect(() => {
+    setIsLoading(false);
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
+
   const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = element.target;
     setGcashData((prevFormData) => ({

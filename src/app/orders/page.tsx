@@ -55,8 +55,15 @@ export default function Orders() {
   };
   useEffect(() => {
     init();
-    setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    setIsLoading(false);
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
+
   return (
     <Subinnerpage title="My Orders">
       {isLoading && (

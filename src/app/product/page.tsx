@@ -58,8 +58,15 @@ export default function Product() {
 
   useEffect(() => {
     getProductDetail();
-    setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    setIsLoading(false);
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
+
   return (
     <Subinnerpage title="">
       {isLoading && (

@@ -44,13 +44,21 @@ export default function Opening() {
   }
   useEffect(() => {
     fetchData();
-    setIsLoading(false);
   }, []);
 
   const handleBtn = () => {
     setIsLoading(true);
     Window.location.href = `/menu`;
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <main className={styles.main}>
