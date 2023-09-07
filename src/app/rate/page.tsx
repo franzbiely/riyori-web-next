@@ -41,7 +41,6 @@ export default function Rate() {
       `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/status/${transaction_Id}`
     );
     const data = await response.json();
-    console.log({ data });
     if (data.status === "succeeded") {
       localStorage.clear();
       setContent({

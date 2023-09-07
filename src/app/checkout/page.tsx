@@ -71,7 +71,6 @@ export default function Checkout() {
           qty: item.quantity,
         };
       });
-      console.log("here I am", newOrdersCache);
       localStorage.setItem("orders", JSON.stringify(newOrdersCache));
 
       setCart(newCart);
@@ -117,8 +116,6 @@ export default function Checkout() {
       message: `Table ${table_Id} has sent an order!`,
     });
 
-    console.log({ data });
-
     localStorage.setItem("transaction_Id", data.id);
     localStorage.removeItem("orders");
     localStorage.removeItem("orderNotes");
@@ -134,7 +131,6 @@ export default function Checkout() {
   };
 
   useEffect(() => {
-    console.log("Side effect 1 called");
     init();
   }, []);
 
