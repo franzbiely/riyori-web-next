@@ -52,11 +52,9 @@ export default function Opening() {
   };
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    setIsLoading(false);
     return () => {
-      clearTimeout(timeoutId);
+      setIsLoading(false);
     };
   }, []);
 

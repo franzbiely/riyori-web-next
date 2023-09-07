@@ -56,7 +56,13 @@ export default function Summary() {
   };
   useEffect(() => {
     init();
+  }, []);
+
+  useEffect(() => {
     setIsLoading(false);
+    return () => {
+      setIsLoading(false);
+    };
   }, []);
 
   useEffect(() => {
