@@ -67,17 +67,19 @@ export default function Menu() {
                   <Loader />
                 </div>
               )}
-              <Image
-                className="image"
-                src={imagePlaceholder}
-                // src={renderImage(
-                //   category.photo ? category.photo : imagePlaceholder
-                // )}
-                alt={category.title}
-                width={160}
-                height={65}
-              />
-              <h6>{category.title}</h6>
+              <div style={{ height: 40 }}>
+                <Image
+                  className="image"
+                  src={renderImage(
+                    category.photo ? category.photo : imagePlaceholder
+                  )}
+                  alt={category.title}
+                  width={160}
+                  height={65}
+                />
+                <h6>{category.title}</h6>
+              </div>
+
               {/* </Link> */}
             </button>
           </li>
