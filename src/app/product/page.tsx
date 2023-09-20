@@ -76,8 +76,8 @@ export default function Product() {
       )}
       <Image
         className={styles.featured_image}
-        src={imagePlaceholder}
-        // src={renderImage(detail?.photo ? detail.photo : imagePlaceholder)}
+        // src={imagePlaceholder}
+        src={renderImage(detail?.photo ? detail.photo : imagePlaceholder)}
         alt="Ryori"
         width={283}
         height={192}

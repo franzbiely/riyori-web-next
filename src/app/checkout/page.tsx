@@ -170,8 +170,8 @@ export default function Checkout() {
             {/* <Link to="/item"> */}
             <Image
               className="image"
-              src={imagePlaceholder}
-              // src={renderImage(item.photo ? item.photo : imagePlaceholder)}
+              // src={imagePlaceholder}
+              src={renderImage(item.photo ? item.photo : imagePlaceholder)}
               alt={item.title}
               width={107}
               height={71}

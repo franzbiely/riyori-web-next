@@ -91,8 +91,8 @@ export default function Category() {
               )}
               <Image
                 className="image"
-                src={imagePlaceholder}
-                // src={renderImage(item.photo ? item.photo : imagePlaceholder)}
+                // src={imagePlaceholder}
+                src={renderImage(item.photo ? item.photo : imagePlaceholder)}
                 alt="Ryori"
                 width={90}
                 height={90}
