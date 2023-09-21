@@ -47,26 +47,22 @@ export default function Summary() {
     );
     const data = await response.json();
     setTableNumber(table_Id);
-
-    setOrders(data.transactionItem);
+    setOrders(data.transactionItems);
   };
   const handleClick = () => {
     setIsLoading(true);
     Window.location.href = "/payment";
   };
   useEffect(() => {
-    init();
-  }, []);
-
-  useEffect(() => {
     setIsLoading(false);
+    init();
     return () => {
       setIsLoading(false);
     };
   }, []);
 
   useEffect(() => {
-    if (orders.length > 0) {
+    if (orders && orders.length > 0) {
       /* @NOTICE: Spreading `orders` here is necessary since type of the state can not be reduced, 
             however the type of the value of the state can be, so this is a necessary hack. */
       const newTotal = [...orders].reduce((prev: number, cur: any) => {
@@ -86,7 +82,7 @@ export default function Summary() {
       )}
       <br />
       <ul className={styles.list}>
-        {orders.map((item: any, key) => (
+        {orders && orders.map((item: any, key) => (
           <li className={`${styles.item} ${layout.container}`} key={key}>
             {/* <Link to="/item"> */}
             <Image

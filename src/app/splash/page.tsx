@@ -68,43 +68,45 @@ export default function Splash() {
       );
       const data = await response.json();
 
-      const orders = localStorage.getItem("orders") || "";
-
-      if (orders.length > 0) {
-        setTimeout(() => {
-          Window.location.href = "/confirm";
-        }, 500);
-      }
-      //  else if (data.status === "new") {
-      //   setTimeout(() => {
-      //     Window.location.href = "/confirm";
-      //   }, 500);
-      // }
-      else if (data.status === "to_prepare") {
-        setTimeout(() => {
-          Window.location.href = "/orders";
-        }, 500);
-      } else if (data.status === "served") {
-        setTimeout(() => {
-          Window.location.href = "/summary";
-        }, 500);
-      } else if (data.status === "awaiting_next_action") {
-        setTimeout(() => {
-          Window.location.href = "/payment";
-        }, 500);
-      } else {
-        localStorage.removeItem("orders");
-        localStorage.removeItem("orderNotes");
-        localStorage.removeItem("transaction_Id");
-        setTimeout(() => {
-          Window.location.href = "/opening";
-        }, 1000);
+      if(data) {
+        const orders = localStorage.getItem("orders") || "";
+        if (orders.length > 0) {
+          setTimeout(() => {
+            Window.location.href = "/confirm";
+          }, 500);
+        }
+         else if (data.status === "new") {
+          setTimeout(() => {
+            Window.location.href = "/confirm";
+          }, 500);
+        }
+        else if (data.status === "to_prepare") {
+          setTimeout(() => {
+            Window.location.href = "/orders";
+          }, 500);
+        } else if (data.status === "served") {
+          localStorage.setItem("transaction_Id", data['_id'])
+          setTimeout(() => {
+            Window.location.href = "/summary";
+          }, 500);
+        } else if (data.status === "awaiting_next_action") {
+          setTimeout(() => {
+            Window.location.href = "/payment";
+          }, 500);
+        } else {
+          localStorage.removeItem("orders");
+          localStorage.removeItem("orderNotes");
+          localStorage.removeItem("transaction_Id");
+          setTimeout(() => {
+            Window.location.href = "/opening";
+          }, 1000);
+        }
       }
     });
   };
   useEffect(() => {
-    fetchData();
     init();
+    fetchData();
   }, []);
   return (
     <main className={styles.main}>
