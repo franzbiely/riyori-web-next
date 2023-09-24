@@ -12,10 +12,11 @@ import { ChangeEvent, useEffect, useLayoutEffect, useState } from "react";
 import layout from "./../../components/layout.module.css";
 import styles from "./checkout.module.css";
 import Link from "next/link";
-import { formatCurrency, renderImage } from "./../../utils/utils";
+import { convertImage, formatCurrency, renderImage, toBase64 } from "./../../utils/utils";
 import { io } from "socket.io-client";
 import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
+import Skeleton from "react-loading-skeleton";
 
 interface i_Cart {
   _id: number;
@@ -35,7 +36,7 @@ if (typeof window !== "undefined") {
 export default function Checkout() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [cart, setCart] = useState<i_Cart[] | []>([i_Cart_default]);
+  const [cart, setCart] = useState<i_Cart[] | []>([]);
   const [notes, setNotes] = useState("");
   const [total, setTotal] = useState(0);
 
@@ -126,19 +127,11 @@ export default function Checkout() {
     setNotes(element.currentTarget.value);
   };
   const handleAddMore = () => {
-    setIsLoading(true);
     Window.location.href = `/menu`;
   };
 
   useEffect(() => {
     init();
-  }, []);
-
-  useEffect(() => {
-    setIsLoading(false);
-    return () => {
-      setIsLoading(false);
-    };
   }, []);
 
   useEffect(() => {
@@ -151,87 +144,102 @@ export default function Checkout() {
       setTotal(newTotal);
     }
   }, [cart]);
-
-  // useEffect(() => {
-  //     console.log("Side effect 2 called")
-  //
-
-  // }, [setCart])
   return (
     <Subinnerpage title="Checkout">
-      {isLoading && (
-        <div>
-          <Loader />
-        </div>
-      )}
-      <ul className={styles.list}>
-        {cart.map((item: any, key) => (
-          <li className={styles.item} key={key}>
-            {/* <Link to="/item"> */}
-            <Image
-              className="image"
-              // src={imagePlaceholder}
-              src={renderImage(item.photo ? item.photo : imagePlaceholder)}
-              alt={item.title}
-              width={107}
-              height={71}
-            />
-            <div className={styles.item_meta}>
-              <div>
-                <h6>{item.title}</h6>
-                <small>{item.description}</small>
+      {
+        cart.length > 0 ? (
+          <>
+            <ul className={styles.list}>
+              {        
+              cart.map((item: any, key) => (
+                <li className={styles.item} key={key}>
+                  <Image
+                    className="image"
+                    src={renderImage(item.photo ? item.photo : imagePlaceholder)}
+                    alt={item.title}
+                    width={107}
+                    height={71}
+                    loading="lazy"
+                    placeholder='blur'
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(convertImage(700, 475))}`}
+                  />
+                  <div className={styles.item_meta}>
+                    <div>
+                      <h6>{item.title}</h6>
+                      <small>{item.description}</small>
 
-                <div className={layout.container}>
-                  <div className={`${layout.column} ${layout.f8}`}>
-                    <QuantityField
-                      fontSize={"12px"}
-                      value={item.quantity}
-                      changeEvent={(qty: number) => {
-                        // console.log("the change Event is fired")
-                        handleChangeQty(key, qty);
-                      }}
-                    />
+                      <div className={layout.container}>
+                        <div className={`${layout.column} ${layout.f8}`}>
+                          <QuantityField
+                            fontSize={"12px"}
+                            value={item.quantity}
+                            changeEvent={(qty: number) => {
+                              // console.log("the change Event is fired")
+                              handleChangeQty(key, qty);
+                            }}
+                          />
+                        </div>
+                        <div className={`${layout.column}`}>
+                          {formatCurrency(item.price)}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className={`${layout.column}`}>
-                    {formatCurrency(item.price)}
-                  </div>
-                </div>
-              </div>
+                </li>
+              ))}        
+            </ul>
+            <br />
+            <h4>Add notes for the chef.</h4>
+            <small>
+              example: &quot;I alergic to seafoods. Halal only please.&quot;
+            </small>
+            <TextField
+              multiline
+              rows={4}
+              variant="outlined"
+              placeholder="Add food notes here..."
+              name="notes"
+              fullWidth
+              sx={{ "& .MuiOutlinedInput-root": inputStyles }}
+              onChange={handleOnChange}
+            />
+            <br />
+            <br />
+            <div className={layout.container}>
+              <div className={`${layout.column} ${layout.f6}`}>Total</div>
+              <div className={`${layout.column}`}>{formatCurrency(total)}</div>
             </div>
-            {/* </Link> */}
-          </li>
-        ))}
-      </ul>
-      <br />
-      <h4>Add notes for the chef.</h4>
-      <small>
-        example: &quot;I alergic to seafoods. Halal only please.&quot;
-      </small>
-      <TextField
-        multiline
-        rows={4}
-        variant="outlined"
-        placeholder="Add food notes here..."
-        name="notes"
-        fullWidth
-        sx={{ "& .MuiOutlinedInput-root": inputStyles }}
-        onChange={handleOnChange}
-      />
-      <br />
-      <br />
-      <div className={layout.container}>
-        <div className={`${layout.column} ${layout.f6}`}>Total</div>
-        <div className={`${layout.column}`}>{formatCurrency(total)}</div>
-      </div>
-      <br />
-      <button onClick={handleAddMore} className="button-primary">
-        Add More
-      </button>
-      <br />
-      <br />
-      <button onClick={handleClick} className="button-secondary">
-        Checkout
-      </button>
+            <br />
+            <button onClick={handleAddMore} className="button-primary">
+              Add More
+            </button>
+            <br />
+            <br />
+            <button onClick={handleClick} className="button-secondary">
+              Checkout
+            </button>
+          </>
+        ) : (
+          <>
+            <Skeleton height={150} />            
+            <br />
+            <h4><Skeleton /></h4>
+            <small><Skeleton /></small>
+            <Skeleton height={100} />
+            <br />
+            <br />
+            <div className={layout.container}>
+              <Skeleton />
+            </div>
+            <br />
+            <Skeleton height={50} />
+            <br />
+            <br />
+            <Skeleton height={50} />
+          </>
+        )
+      }
+      
     </Subinnerpage>
   );
 }

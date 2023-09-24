@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./layout.module.css";
 import Image from "next/image";
 import ryoriLogo from "../../public/images/ryori-logo-red-small.png";
+import { toBase64, convertImage } from "@/utils/utils";
+import Skeleton from "react-loading-skeleton";
 
 type Data = {
   photo: string;
@@ -42,11 +44,11 @@ export default function Header() {
     }
   }
   useEffect(() => {
-    fetchStoreImg();
     const storedTableId = localStorage.getItem("table_Id");
     if (typeof window !== "undefined" && storedTableId) {
       setTableId(storedTableId);
     }
+    fetchStoreImg();
   }, []);
   return (
     <div className={styles.header}>
@@ -60,17 +62,18 @@ export default function Header() {
             width={30}
             height={31}
             style={{
-              borderRadius: 100,
-              overflow: "hidden",
               width: "30px",
               height: "30px",
             }}
+            loading="lazy"
+            placeholder='blur'
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(convertImage(700, 475))}`}
           />
         </div>
         <div className={`${styles.column} ${styles.f8}`}>
           <h4 className={styles.greetings}>
-            {greeting}
-            {table_Id && <small>Table {table_Id}</small>}
+            {greeting || <Skeleton />}
+            {table_Id ? <small>Table {table_Id}</small> : <Skeleton />}
           </h4>
         </div>
       </div>

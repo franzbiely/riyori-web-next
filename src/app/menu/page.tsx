@@ -7,9 +7,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./menu.module.css";
-import { renderImage } from "./../../utils/utils";
+import { convertImage, renderImage, toBase64 } from "./../../utils/utils";
 import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 interface Category_i {
   _id: number;
@@ -23,6 +25,7 @@ if (typeof window !== "undefined") {
 }
 export default function Menu() {
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const getAll = async () => {
     const response = await fetch(
@@ -33,32 +36,26 @@ export default function Menu() {
     const data = await response.json();
     setCategories(data);
   };
-  const [categories, setCategories] = useState([]);
+  
   useEffect(() => {
     getAll();
   }, []);
 
   const handleBtn = (category: number) => {
-    setIsLoading(true);
     Window.location.href = "/category?id=" + category;
   };
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, []);
-
+  
   return (
     <Innerpage>
       <br />
       {/* <Search /> */}
       <br />
       <h4>Categories</h4>
+      
       <ul className={styles.menu_list}>
-        {categories.map((category: Category_i, key: number) => (
+        {
+        categories.length > 0 ?
+        categories.map((category: Category_i, key: number) => (
           <li className={styles.menu_item} key={key}>
             <button onClick={() => handleBtn(category._id)}>
               {/* <Link prefetch={false} href={"/category?id=" + category.id}> */}
@@ -76,6 +73,9 @@ export default function Menu() {
                   alt={category.title}
                   width={160}
                   height={65}
+                  loading="lazy"
+                  placeholder='blur'
+                  blurDataURL={`data:image/svg+xml;base64,${toBase64(convertImage(700, 475))}`}
                 />
                 <h6>{category.title}</h6>
               </div>
@@ -83,7 +83,15 @@ export default function Menu() {
               {/* </Link> */}
             </button>
           </li>
-        ))}
+        ))
+        :
+        [1,2,3,4].map((item: number, key: number) => (
+          <li className={[styles.menu_item, styles.skeleton].join(' ')} key={key}>
+              <Skeleton width={160} height={65}/>
+              <h6><Skeleton /></h6>
+          </li>
+        ))
+        }
       </ul>
       <br />
       {/* <h4>Add-ons</h4>

@@ -6,9 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./category.module.css";
-import { formatCurrency, renderImage } from "./../../utils/utils";
+import { convertImage, formatCurrency, renderImage, toBase64 } from "./../../utils/utils";
 import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
+import Skeleton from "react-loading-skeleton";
 
 interface Menu_i {
   _id: number;
@@ -60,17 +61,8 @@ export default function Category() {
   }, []);
 
   const handleBtn = (item: number) => {
-    setIsLoading(true);
     Window.location.href = "../product/?id=" + item;
-    // setIsLoading(false);
   };
-
-  useEffect(() => {
-    setIsLoading(false);
-    return () => {
-      setIsLoading(false);
-    };
-  }, []);
 
   return (
     <Innerpage>
@@ -80,37 +72,47 @@ export default function Category() {
       <h4>{currentCategory.title}</h4>
       <br />
       <ul className={styles.categories}>
-        {menuItem.map((item: Menu_i, key: number) => (
+        {
+        menuItem.length > 0 ?
+        menuItem.map((item: Menu_i, key: number) => (
           <li className={styles.category} key={key}>
             <button className={styles.btn} onClick={() => handleBtn(item._id)}>
-              {/* <Link href={`/product/?id=${item.id}`}> */}
-              {isLoading && (
-                <div>
-                  <Loader />
-                </div>
-              )}
               <Image
                 className="image"
-                // src={imagePlaceholder}
                 src={renderImage(item.photo ? item.photo : imagePlaceholder)}
                 alt="Ryori"
                 width={90}
                 height={90}
+                loading="lazy"
+                placeholder='blur'
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(convertImage(700, 475))}`}
               />
               <div className={styles.category_meta}>
                 <h6>{item.title}</h6>
                 <small>{formatCurrency(item.price)}</small>
                 <button
-                  // onClick={handleClick}
                   className="button-secondary"
                 >
                   Add to Basket
                 </button>
               </div>
-              {/* </Link> */}
             </button>
           </li>
-        ))}
+        ))
+        :
+        [1].map((item: number, key: number) => (
+          <li className={styles.category} key={key}>
+            <div className={styles.btn}>
+              <Skeleton className="image" width={90} height={90}/>
+              <div className={styles.category_meta}>
+                <h6><Skeleton /></h6>
+                <small><Skeleton /></small>
+                <Skeleton className="button-secondary"/>
+              </div>
+            </div>
+          </li>
+        ))
+      }
       </ul>
     </Innerpage>
   );

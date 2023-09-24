@@ -16,6 +16,12 @@
   border: 1px solid #ccc;
   background-color: #fff;
 }
+.skeleton {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
 .menu_item:hover {
   opacity: 0.9;
   cursor: pointer;
