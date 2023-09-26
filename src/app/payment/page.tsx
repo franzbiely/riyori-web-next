@@ -60,7 +60,7 @@ export default function Payment() {
     const transaction_Id = localStorage.getItem("transaction_Id") || "";
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("id", transaction_Id?.toString());
+    urlencoded.append("_id", transaction_Id?.toString());
     urlencoded.append("phone", gcashData.phone);
     urlencoded.append("email", gcashData.email);
     urlencoded.append("name", gcashData.name);

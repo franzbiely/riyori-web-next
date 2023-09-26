@@ -82,32 +82,31 @@ export default function Summary() {
       )}
       <br />
       <ul className={styles.list}>
-        {orders && orders.map((item: any, key) => (
-          <li className={`${styles.item} ${layout.container}`} key={key}>
-            {/* <Link to="/item"> */}
-            <Image
-              className={`${styles.image} ${layout.column} ${layout.f2}`}
-              // src={imagePlaceholder}
-              src={renderImage(item?.photo ? item.photo : imagePlaceholder)}
-              alt="Ryori"
-              width={45}
-              height={35}
-            />
-            <div className={`${styles.qty} ${layout.column} ${layout.f1}`}>
-              {item.quantity} x
-            </div>
-            <div
-              className={`${styles.item_meta} ${layout.column} ${layout.f6}`}
-            >
-              <h6>{item.menuItem.title}</h6>
-              <small>{item.menuItem.description}</small>
-            </div>
-            <div className={`${layout.column} ${layout.f1} ${styles.price}`}>
-              P{item.menuItem.price}
-            </div>
-            {/* </Link> */}
-          </li>
-        ))}
+        {orders &&
+          orders.map((item: any, key) => (
+            <li className={`${styles.item} ${layout.container}`} key={key}>
+              <Image
+                className={`${styles.image} ${layout.column} ${layout.f2}`}
+                // src={imagePlaceholder}
+                src={renderImage(item?.photo ? item.photo : imagePlaceholder)}
+                alt="Ryori"
+                width={45}
+                height={35}
+              />
+              <div className={`${styles.qty} ${layout.column} ${layout.f1}`}>
+                {item.quantity} x
+              </div>
+              <div
+                className={`${styles.item_meta} ${layout.column} ${layout.f6}`}
+              >
+                <h6>{item.menuItem.title}</h6>
+                <small>{item.menuItem.description}</small>
+              </div>
+              <div className={`${layout.column} ${layout.f1} ${styles.price}`}>
+                P{item.menuItem.price}
+              </div>
+            </li>
+          ))}
       </ul>
       <br />
       <div className={`${layout.container} ${styles.subtotal}`}>

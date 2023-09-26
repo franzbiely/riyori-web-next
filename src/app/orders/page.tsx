@@ -36,7 +36,7 @@ export default function Orders() {
     const transaction_Id = data._id;
     localStorage.setItem("transaction_Id", transaction_Id);
 
-    const newOrdersUi = data.transactionItem.map((item: i_TransactionItem) => {
+    const newOrdersUi = data.transactionItems.map((item: i_TransactionItem) => {
       return {
         col1: item.quantity,
         col2: item.menuItem.title,
