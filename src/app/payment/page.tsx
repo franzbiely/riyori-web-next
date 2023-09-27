@@ -257,7 +257,7 @@ export default function Payment() {
               <TextField
                 rows={1}
                 variant="outlined"
-                placeholder="mm"
+                placeholder="yyyy"
                 fullWidth
                 size="small"
                 name="email"
