@@ -50,7 +50,10 @@ export default function Checkout() {
   };
 
   const init = async () => {
-    const lcData = JSON.parse(localStorage.getItem("orders") || "[]");
+    const lcData = JSON.parse(localStorage.getItem("orders") || '');
+    if(lcData === '') {
+      return;
+    }
     const ids = lcData.map((item: any) => item._id).join(",");
 
     const response = await fetch(
