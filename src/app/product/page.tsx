@@ -60,58 +60,63 @@ export default function Product() {
 
   return (
     <Subinnerpage title="">
-      {
-        detail ? (
-          <>
-            <Image
-              className={styles.featured_image}
-              src={renderImage(detail?.photo ? detail.photo : imagePlaceholder)}
-              alt={detail.title}
-              width={283}
-              height={192}
-              loading="lazy"
-              placeholder='blur'
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(convertImage(700, 475))}`}
-            />
-            <br />
-            <div className={layout.container}>
-              <div className={`${layout.column} ${layout.f6}`}>
-                <h4>{detail.title}</h4>
-                <small>{detail.description}</small>
-                <br />
-                <QuantityField changeEvent={handleOnChange} value={quantity} />
-              </div>
-              <div className={`${layout.column} ${layout.right}`}>
-                <h4>₱{detail.price}</h4>
-              </div>
+      {detail ? (
+        <>
+          <Image
+            className={styles.featured_image}
+            src={renderImage(detail?.photo ? detail.photo : imagePlaceholder)}
+            alt={detail.title}
+            width={283}
+            height={192}
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(
+              convertImage(700, 475)
+            )}`}
+          />
+          <br />
+          <div className={layout.container}>
+            <div className={`${layout.column} ${layout.f6}`}>
+              <h4>{detail.title}</h4>
+              <small>{detail.description}</small>
+              <br />
+              <QuantityField changeEvent={handleOnChange} value={quantity} />
             </div>
-            {/* <Table header="Select Add-Ons" datas={[]} /> */}
-            <br />
-            <button onClick={handleClick} className="button-secondary">
-              Add To Order
-            </button>
-          </>
-        )
-        :
-        (
-          <>
-            <Skeleton width={283} height={192} className={styles.featured_image} />            
-            <br />
-            <div className={layout.container}>
-              <div className={`${layout.column} ${layout.f6}`}>
-                <h4><Skeleton /></h4>
-                <small><Skeleton /></small>
-                <br />
+            <div className={`${layout.column} ${layout.right}`}>
+              <h4>₱{detail.price}</h4>
+            </div>
+          </div>
+          {/* <Table header="Select Add-Ons" datas={[]} /> */}
+          <br />
+          <button onClick={handleClick} className="button-secondary">
+            Add To Order
+          </button>
+        </>
+      ) : (
+        <>
+          <Skeleton
+            width={283}
+            height={192}
+            className={styles.featured_image}
+          />
+          <br />
+          <div className={layout.container}>
+            <div className={`${layout.column} ${layout.f6}`}>
+              <h4>
                 <Skeleton />
-              </div>
+              </h4>
+              <small>
+                <Skeleton />
+              </small>
+              <br />
+              <Skeleton />
             </div>
-            {/* <Table header="Select Add-Ons" datas={[]} /> */}
-            <br />
-            <Skeleton />
-          </>
-        )
-      }
-      
+          </div>
+          {/* <Table header="Select Add-Ons" datas={[]} /> */}
+          <br />
+          <Skeleton />
+        </>
+      )}
     </Subinnerpage>
   );
 }

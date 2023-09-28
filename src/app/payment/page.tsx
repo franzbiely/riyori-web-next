@@ -21,13 +21,22 @@ if (typeof window !== "undefined") {
 export default function Payment() {
   const [isLoading, setIsLoading] = useState(false);
 
+  const [openBank, setOpenBank] = useState(false);
   const [openGCash, setOpenGCash] = useState(false);
   const [gcashData, setGcashData] = useState({
     phone: "",
     name: "",
     email: "",
   });
-  const [payCash, setPayCash] = useState("to_pay");
+  const [bankData, setBankData] = useState({
+    cardHolderName: "",
+    cardNumber: "",
+    cvn: "",
+  });
+
+  const openBankField = () => {
+    setOpenBank(!openBank);
+  };
 
   const openGCashField = () => {
     setOpenGCash(!openGCash);
@@ -56,6 +65,33 @@ export default function Payment() {
     // }
   };
 
+  const debitPay = async () => {
+    const transaction_Id = localStorage.getItem("transaction_Id") || "";
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("_id", transaction_Id?.toString());
+    urlencoded.append("cardHolderName", bankData.cardHolderName);
+    urlencoded.append("cardNumber", bankData.cardNumber);
+    urlencoded.append("cvn", bankData.cvn);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/create-payment/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: urlencoded,
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.redirect) {
+      setIsLoading(true);
+      Window.location.href = data.redirect;
+    }
+  };
   const handlePay = async () => {
     const transaction_Id = localStorage.getItem("transaction_Id") || "";
 
@@ -131,20 +167,22 @@ export default function Payment() {
             {/* </Link> */}
           </li>
         </Link>
-        <li className={`${styles.item} ${layout.container}`}>
-          {/* <Link to="/item"> */}
-          <Image
-            className={`${layout.column} `}
-            src="/images/bank-cards.svg"
-            alt="Ryori"
-            width={30}
-            height={28}
-          />
-          <div className={`${layout.column} ${layout.f7} ${styles.item_meta}`}>
-            Debit/Credit
-          </div>
-          {/* </Link> */}
-        </li>
+        <Link href="" onClick={openBankField}>
+          <li className={`${styles.item} ${layout.container}`}>
+            <Image
+              className={`${layout.column} `}
+              src="/images/bank-cards.svg"
+              alt="Ryori"
+              width={30}
+              height={28}
+            />
+            <div
+              className={`${layout.column} ${layout.f7} ${styles.item_meta}`}
+            >
+              Debit/Credit
+            </div>
+          </li>
+        </Link>
         <Link href="" onClick={openGCashField}>
           <li className={`${styles.item} ${layout.container}`}>
             <Image
@@ -165,6 +203,105 @@ export default function Payment() {
 
       <br />
       <hr />
+      <br />
+      {openBank && (
+        <>
+          <p className={styles.p}>Cardholder's Name</p>
+          <TextField
+            rows={1}
+            variant="outlined"
+            placeholder=""
+            fullWidth
+            name="name"
+            sx={{ "& .MuiOutlinedInput-root": inputStyles }}
+            onChange={handleOnChange}
+          />
+          <br />
+          <br />
+          <p className={styles.p}>Card Number</p>
+          <TextField
+            rows={1}
+            variant="outlined"
+            placeholder=""
+            fullWidth
+            name="name"
+            sx={{ "& .MuiOutlinedInput-root": inputStyles }}
+            onChange={handleOnChange}
+          />
+          <br />
+          <br />
+
+          <div className={`${layout.column} ${styles.row_meta}`}>
+            <div>
+              <p className={styles.p}>Expiration Month</p>
+              <TextField
+                rows={1}
+                variant="outlined"
+                placeholder="mm"
+                fullWidth
+                size="small"
+                name="email"
+                type="number"
+                sx={{
+                  "& .MuiOutlinedInput-root": inputStyles,
+                  "& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button":
+                    {
+                      display: "none", // Hide the increment and decrement arrows
+                    },
+                }}
+                onChange={handleOnChange}
+              />
+            </div>
+            <div>
+              <p className={styles.p}>Expiration Year</p>
+              <TextField
+                rows={1}
+                variant="outlined"
+                placeholder="yyyy"
+                fullWidth
+                size="small"
+                name="email"
+                type="number"
+                sx={{
+                  "& .MuiOutlinedInput-root": inputStyles,
+                  "& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button":
+                    {
+                      display: "none", // Hide the increment and decrement arrows
+                    },
+                }}
+                onChange={handleOnChange}
+              />
+            </div>
+            <div>
+              <p className={styles.p}>CVN</p>
+              <TextField
+                rows={1}
+                variant="outlined"
+                placeholder=""
+                fullWidth
+                type="number"
+                size="small"
+                name="email"
+                sx={{
+                  "& .MuiOutlinedInput-root": inputStyles,
+                  "& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button":
+                    {
+                      display: "none", // Hide the increment and decrement arrows
+                    },
+                }}
+                onChange={handleOnChange}
+              />
+            </div>
+          </div>
+
+          <br />
+          <br />
+          <button onClick={debitPay} className="button-secondary">
+            Pay
+          </button>
+        </>
+      )}
+      <br />
       <br />
       {openGCash && (
         <>
@@ -192,7 +329,7 @@ export default function Payment() {
           />
           <br />
           <br />
-          <p className={styles.p}>Enter Email: </p>
+          <p className={styles.p}>Amount </p>
           <TextField
             rows={1}
             variant="outlined"

@@ -6,7 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./category.module.css";
-import { convertImage, formatCurrency, renderImage, toBase64 } from "./../../utils/utils";
+import {
+  convertImage,
+  formatCurrency,
+  renderImage,
+  toBase64,
+} from "./../../utils/utils";
 import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
 import Skeleton from "react-loading-skeleton";
@@ -66,53 +71,59 @@ export default function Category() {
 
   return (
     <Innerpage>
-      {/* <Search /> */}
+      <Search />
 
       <br />
       <h4>{currentCategory.title}</h4>
       <br />
       <ul className={styles.categories}>
-        {
-        menuItem.length > 0 ?
-        menuItem.map((item: Menu_i, key: number) => (
-          <li className={styles.category} key={key}>
-            <button className={styles.btn} onClick={() => handleBtn(item._id)}>
-              <Image
-                className="image"
-                src={renderImage(item.photo ? item.photo : imagePlaceholder)}
-                alt="Ryori"
-                width={90}
-                height={90}
-                loading="lazy"
-                placeholder='blur'
-                blurDataURL={`data:image/svg+xml;base64,${toBase64(convertImage(700, 475))}`}
-              />
-              <div className={styles.category_meta}>
-                <h6>{item.title}</h6>
-                <small>{formatCurrency(item.price)}</small>
+        {menuItem.length > 0
+          ? menuItem.map((item: Menu_i, key: number) => (
+              <li className={styles.category} key={key}>
                 <button
-                  className="button-secondary"
+                  className={styles.btn}
+                  onClick={() => handleBtn(item._id)}
                 >
-                  Add to Basket
+                  <div style={{ height: 1 }}>
+                    <Image
+                      className="image"
+                      src={renderImage(
+                        item.photo ? item.photo : imagePlaceholder
+                      )}
+                      alt="Ryori"
+                      width={90}
+                      height={90}
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                        convertImage(700, 475)
+                      )}`}
+                    />
+                  </div>
+                  <div className={styles.category_meta}>
+                    <h6>{item.title}</h6>
+                    <small>{formatCurrency(item.price)}</small>
+                    <button className="button-secondary">Add to Basket</button>
+                  </div>
                 </button>
-              </div>
-            </button>
-          </li>
-        ))
-        :
-        [1].map((item: number, key: number) => (
-          <li className={styles.category} key={key}>
-            <div className={styles.btn}>
-              <Skeleton className="image" width={90} height={90}/>
-              <div className={styles.category_meta}>
-                <h6><Skeleton /></h6>
-                <small><Skeleton /></small>
-                <Skeleton className="button-secondary"/>
-              </div>
-            </div>
-          </li>
-        ))
-      }
+              </li>
+            ))
+          : [1].map((item: number, key: number) => (
+              <li className={styles.category} key={key}>
+                <div className={styles.btn}>
+                  <Skeleton className="image" width={90} height={90} />
+                  <div className={styles.category_meta}>
+                    <h6>
+                      <Skeleton />
+                    </h6>
+                    <small>
+                      <Skeleton />
+                    </small>
+                    <Skeleton className="button-secondary" />
+                  </div>
+                </div>
+              </li>
+            ))}
       </ul>
     </Innerpage>
   );
