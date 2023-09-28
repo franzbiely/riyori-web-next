@@ -20,7 +20,7 @@ if (typeof window !== "undefined") {
 
 export default function Payment() {
   const [isLoading, setIsLoading] = useState(false);
-
+  const [error, setError] = useState("");
   const [openBank, setOpenBank] = useState(false);
   const [openGCash, setOpenGCash] = useState(false);
   const [gcashData, setGcashData] = useState({
@@ -31,15 +31,20 @@ export default function Payment() {
   const [bankData, setBankData] = useState({
     cardHolderName: "",
     cardNumber: "",
+    amount: "",
     cvn: "",
+    month: "",
+    year: "",
   });
 
   const openBankField = () => {
     setOpenBank(!openBank);
+    setOpenGCash(false);
   };
 
   const openGCashField = () => {
     setOpenGCash(!openGCash);
+    setOpenBank(false);
   };
 
   const toPayCash = async () => {
@@ -66,57 +71,74 @@ export default function Payment() {
   };
 
   const debitPay = async () => {
-    const transaction_Id = localStorage.getItem("transaction_Id") || "";
+    if (!bankData.cardHolderName || !bankData.cardNumber || !bankData.amount) {
+      setError("All fields are required.");
+    } else if (bankData.month.length !== 2) {
+      setError("Month should 2 characters. Example: '06' ");
+    } else if (bankData.year.length !== 4) {
+      setError("Year should 4 characters. Example: '2030'");
+    } else if (bankData.cvn.length !== 3) {
+      setError("The last 3 digit of your Card Verification Number (CVN) ");
+    } else {
+      setError("");
+      const transaction_Id = localStorage.getItem("transaction_Id") || "";
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("_id", transaction_Id?.toString());
-    urlencoded.append("cardHolderName", bankData.cardHolderName);
-    urlencoded.append("cardNumber", bankData.cardNumber);
-    urlencoded.append("cvn", bankData.cvn);
+      const urlencoded = new URLSearchParams();
+      urlencoded.append("_id", transaction_Id?.toString());
+      urlencoded.append("cardHolderName", bankData.cardHolderName);
+      urlencoded.append("cardNumber", bankData.cardNumber);
+      urlencoded.append("cvn", bankData.cvn);
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/create-payment/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: urlencoded,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/create-payment/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: urlencoded,
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.redirect) {
+        setIsLoading(true);
+        Window.location.href = data.redirect;
       }
-    );
-
-    const data = await response.json();
-
-    if (data.redirect) {
-      setIsLoading(true);
-      Window.location.href = data.redirect;
     }
   };
+
   const handlePay = async () => {
-    const transaction_Id = localStorage.getItem("transaction_Id") || "";
+    if (!gcashData.name || !gcashData.phone || !gcashData.email) {
+      setError("All fields are required.");
+    } else {
+      setError("");
+      const transaction_Id = localStorage.getItem("transaction_Id") || "";
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("_id", transaction_Id?.toString());
-    urlencoded.append("phone", gcashData.phone);
-    urlencoded.append("email", gcashData.email);
-    urlencoded.append("name", gcashData.name);
+      const urlencoded = new URLSearchParams();
+      urlencoded.append("_id", transaction_Id?.toString());
+      urlencoded.append("phone", gcashData.phone);
+      urlencoded.append("email", gcashData.email);
+      urlencoded.append("name", gcashData.name);
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/create-payment/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: urlencoded,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/create-payment/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: urlencoded,
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.redirect) {
+        setIsLoading(true);
+        Window.location.href = data.redirect;
       }
-    );
-
-    const data = await response.json();
-
-    if (data.redirect) {
-      setIsLoading(true);
-      Window.location.href = data.redirect;
     }
   };
 
@@ -130,6 +152,14 @@ export default function Payment() {
   const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = element.target;
     setGcashData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleChange = (element: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = element.target;
+    setBankData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
@@ -212,9 +242,9 @@ export default function Payment() {
             variant="outlined"
             placeholder=""
             fullWidth
-            name="name"
+            name="cardHolderName"
             sx={{ "& .MuiOutlinedInput-root": inputStyles }}
-            onChange={handleOnChange}
+            onChange={handleChange}
           />
           <br />
           <br />
@@ -224,9 +254,21 @@ export default function Payment() {
             variant="outlined"
             placeholder=""
             fullWidth
-            name="name"
+            name="cardNumber"
             sx={{ "& .MuiOutlinedInput-root": inputStyles }}
-            onChange={handleOnChange}
+            onChange={handleChange}
+          />
+          <br />
+          <br />
+          <p className={styles.p}>Amount</p>
+          <TextField
+            rows={1}
+            variant="outlined"
+            placeholder=""
+            fullWidth
+            name="amount"
+            sx={{ "& .MuiOutlinedInput-root": inputStyles }}
+            onChange={handleChange}
           />
           <br />
           <br />
@@ -240,16 +282,16 @@ export default function Payment() {
                 placeholder="mm"
                 fullWidth
                 size="small"
-                name="email"
+                name="month"
                 type="number"
                 sx={{
                   "& .MuiOutlinedInput-root": inputStyles,
                   "& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button":
                     {
-                      display: "none", // Hide the increment and decrement arrows
+                      display: "none",
                     },
                 }}
-                onChange={handleOnChange}
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -260,16 +302,16 @@ export default function Payment() {
                 placeholder="yyyy"
                 fullWidth
                 size="small"
-                name="email"
+                name="year"
                 type="number"
                 sx={{
                   "& .MuiOutlinedInput-root": inputStyles,
                   "& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button":
                     {
-                      display: "none", // Hide the increment and decrement arrows
+                      display: "none",
                     },
                 }}
-                onChange={handleOnChange}
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -281,7 +323,7 @@ export default function Payment() {
                 fullWidth
                 type="number"
                 size="small"
-                name="email"
+                name="cvn"
                 sx={{
                   "& .MuiOutlinedInput-root": inputStyles,
                   "& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button":
@@ -289,20 +331,19 @@ export default function Payment() {
                       display: "none", // Hide the increment and decrement arrows
                     },
                 }}
-                onChange={handleOnChange}
+                onChange={handleChange}
               />
             </div>
           </div>
 
           <br />
-          <br />
+
+          {error && <div className="error_message">{error}</div>}
           <button onClick={debitPay} className="button-secondary">
             Pay
           </button>
         </>
       )}
-      <br />
-      <br />
       {openGCash && (
         <>
           <p className={styles.p}>Enter Name: </p>
@@ -341,6 +382,7 @@ export default function Payment() {
           />
           <br />
           <br />
+          {error && <div className="error_message">{error}</div>}
           <button onClick={handlePay} className="button-secondary">
             Pay
           </button>

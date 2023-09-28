@@ -68,24 +68,30 @@ export default function Splash() {
       );
       const data = await response.json();
 
-      if(data) {
+      if (data) {
         const orders = localStorage.getItem("orders") || "";
         if (orders.length > 0) {
           setTimeout(() => {
             Window.location.href = "/confirm";
           }, 500);
-        }
-         else if (data.status === "new") {
+        } else if (data.status === "new") {
           setTimeout(() => {
             Window.location.href = "/confirm";
           }, 500);
-        }
-        else if (data.status === "to_prepare") {
+        } else if (data.status === "to_prepare") {
+          setTimeout(() => {
+            Window.location.href = "/orders";
+          }, 500);
+        } else if (data.status === "preparing") {
+          setTimeout(() => {
+            Window.location.href = "/orders";
+          }, 500);
+        } else if (data.status === "serving") {
           setTimeout(() => {
             Window.location.href = "/orders";
           }, 500);
         } else if (data.status === "served") {
-          localStorage.setItem("transaction_Id", data['_id'])
+          localStorage.setItem("transaction_Id", data["_id"]);
           setTimeout(() => {
             Window.location.href = "/summary";
           }, 500);

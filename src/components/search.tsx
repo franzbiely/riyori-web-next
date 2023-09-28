@@ -11,29 +11,34 @@ import SearchIcon from "@mui/icons-material/Search";
 export default function Search() {
   return (
     <div className={styles.search}>
-      <TextField
-        disabled={true}
-        fullWidth
-        placeholder="Search food here"
-        id="fullWidth"
-        className={styles.search}
-        InputProps={{
-          disableUnderline: true,
-          startAdornment: (
-            <InputAdornment position="start" className={styles.inputAdornment}>
-              <SearchIcon style={{ color: "#000" }} />
-            </InputAdornment>
-          ),
-          style: {},
-          inputProps: {
-            style: {
-              fontFamily: "inherit",
-              padding: "6px", // Adjust the padding value as needed
-              backgroundColor: "#f6f6f6",
+      <div className="temp_hide">
+        <TextField
+          disabled={true}
+          fullWidth
+          placeholder="Search food here"
+          id="fullWidth"
+          className={styles.search}
+          InputProps={{
+            disableUnderline: true,
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                className={styles.inputAdornment}
+              >
+                <SearchIcon style={{ color: "#000" }} />
+              </InputAdornment>
+            ),
+            style: {},
+            inputProps: {
+              style: {
+                fontFamily: "inherit",
+                padding: "6px", // Adjust the padding value as needed
+                backgroundColor: "#f6f6f6",
+              },
             },
-          },
-        }}
-      />
+          }}
+        />
+      </div>
     </div>
   );
 }

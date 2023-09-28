@@ -48,7 +48,9 @@ export default function Menu() {
   return (
     <Innerpage>
       <br />
+
       <Search />
+
       <br />
       <h4>Categories</h4>
 
@@ -98,39 +100,41 @@ export default function Menu() {
             ))}
       </ul>
       <br />
-      <h4>Add-ons</h4>
-      <ul className={styles.addons_list}>
-        <li>Coffee</li>
-        <li>Coffee</li>
-        <li>Coffee</li>
-        <li>Coffee</li>
-        <li>Coffee</li>
-      </ul>
-      <br />
-      <h4>Top Sellers</h4>
-      <ul className={styles.topsellers_list}>
-        {[1, 2, 3].map((category, key) => (
-          <li className={styles.topsellers_item}>
-            <Image
-              className="image"
-              src="/images/sample-chicken.png"
-              alt="Ryori"
-              width={143}
-              height={90}
-            />
-            <div className={styles.topsellers_meta}>
-              <h6>Chicken</h6>
-              <small>P350</small>
-              <button
-                // onClick={handleClick}
-                className="button-secondary"
-              >
-                Add to Basket
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div className="temp_hide">
+        <h4>Add-ons</h4>
+        <ul className={styles.addons_list}>
+          <li>Coffee</li>
+          <li>Coffee</li>
+          <li>Coffee</li>
+          <li>Coffee</li>
+          <li>Coffee</li>
+        </ul>
+        <br />
+        <h4>Top Sellers</h4>
+        <ul className={styles.topsellers_list}>
+          {[1, 2, 3].map((category, key) => (
+            <li className={styles.topsellers_item}>
+              <Image
+                className="image"
+                src="/images/sample-chicken.png"
+                alt="Ryori"
+                width={143}
+                height={90}
+              />
+              <div className={styles.topsellers_meta}>
+                <h6>Chicken</h6>
+                <small>P350</small>
+                <button
+                  // onClick={handleClick}
+                  className="button-secondary"
+                >
+                  Add to Basket
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Innerpage>
   );
 }

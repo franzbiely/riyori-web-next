@@ -24,6 +24,8 @@ export default function Summary() {
   const [tableNumber, setTableNumber] = useState("0");
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const [charges, setCharges] = useState(0);
+  const [discount, setDiscount] = useState(0);
   const [orders, setOrders] = useState([
     {
       quantity: 0,
@@ -48,6 +50,8 @@ export default function Summary() {
     const data = await response.json();
     setTableNumber(table_Id);
     setOrders(data.transactionItems);
+    setCharges(data.charges);
+    setDiscount(data.discount);
   };
   const handleClick = () => {
     setIsLoading(true);
@@ -69,7 +73,8 @@ export default function Summary() {
         return prev + cur.quantity * cur.menuItem.price;
       }, 0);
       setSubtotal(newTotal);
-      setTotal(newTotal);
+      const orderTotal = newTotal - discount + charges;
+      setTotal(orderTotal);
     }
   }, [orders]);
 
@@ -87,9 +92,8 @@ export default function Summary() {
             <li className={`${styles.item} ${layout.container}`} key={key}>
               <Image
                 className={`${styles.image} ${layout.column} ${layout.f2}`}
-                // src={imagePlaceholder}
                 src={renderImage(item?.photo ? item.photo : imagePlaceholder)}
-                alt="Ryori"
+                alt={item.title}
                 width={45}
                 height={35}
               />
@@ -111,11 +115,20 @@ export default function Summary() {
       <br />
       <div className={`${layout.container} ${styles.subtotal}`}>
         <div className={`${layout.column} ${layout.f6}`}>Subtotal</div>
-        <div className={`${layout.column}`}>₱{subtotal}</div>
+        <div className={`${layout.column}`}>₱ {subtotal}</div>
       </div>
+      <div className={`${layout.container} ${styles.subtotal}`}>
+        <div className={`${layout.column} ${layout.f6}`}>Charges</div>
+        <div className={`${layout.column}`}>₱ {charges}</div>
+      </div>
+      <div className={`${layout.container} ${styles.subtotal}`}>
+        <div className={`${layout.column} ${layout.f6}`}>Discount</div>
+        <div className={`${layout.column}`}>₱ {discount}</div>
+      </div>
+
       <div className={layout.container}>
         <div className={`${layout.column} ${layout.f6}`}>Total</div>
-        <div className={`${layout.column}`}>₱{total}</div>
+        <div className={`${layout.column}`}>₱ {total}</div>
       </div>
       <br />
       <button onClick={handleClick} className="button-secondary">
