@@ -50,8 +50,8 @@ export default function Summary() {
     const data = await response.json();
     setTableNumber(table_Id);
     setOrders(data.transactionItems);
-    setCharges(data.charges);
-    setDiscount(data.discount);
+    setCharges(data.charges || 0);
+    setDiscount(data.discount || 0);
   };
   const handleClick = () => {
     setIsLoading(true);
