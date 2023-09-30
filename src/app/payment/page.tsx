@@ -236,7 +236,7 @@ export default function Payment() {
       <br />
       {openBank && (
         <>
-          <p className={styles.p}>Cardholder's Name</p>
+          <p className={styles.p}>Cardholder&apos;s Name</p>
           <TextField
             rows={1}
             variant="outlined"

@@ -113,7 +113,7 @@ export default function Menu() {
         <h4>Top Sellers</h4>
         <ul className={styles.topsellers_list}>
           {[1, 2, 3].map((category, key) => (
-            <li className={styles.topsellers_item}>
+            <li key={key} className={styles.topsellers_item}>
               <Image
                 className="image"
                 src="/images/sample-chicken.png"

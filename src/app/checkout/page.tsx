@@ -123,6 +123,7 @@ export default function Checkout() {
     socket.emit("order.new", {
       title: `[Table ${table_Id}]: New Order`,
       message: `Table ${table_Id} has sent an order!`,
+      branch_Id: branch_Id 
     });
 
     localStorage.setItem("transaction_Id", data.id);

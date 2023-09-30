@@ -11,7 +11,10 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["ryori-assets.s3.amazonaws.com"],
+    domains: [
+      "ryori-assets.s3.amazonaws.com",
+      "ryori-assets.s3.ap-northeast-1.amazonaws.com"
+    ],
   },
   trailingSlash: true,
 
