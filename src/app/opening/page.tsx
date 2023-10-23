@@ -21,7 +21,7 @@ if (typeof window !== "undefined") {
 
 export default function Opening() {
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState("");
+  const [customer_name, setCustomerName] = useState("");
   const [productData, setProductData] = useState<Data>({
     photo: "",
   });
@@ -44,7 +44,7 @@ export default function Opening() {
     }
   }
   const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
-    setName(element.currentTarget.value);
+    setCustomerName(element.currentTarget.value);
   };
   const inputStyles = {
     marginTop: "5px",
@@ -57,7 +57,7 @@ export default function Opening() {
 
   const handleBtn = () => {
     setIsLoading(true);
-    localStorage.setItem("name", name);
+    localStorage.setItem("customer_name", customer_name);
     Window.location.href = `/menu`;
   };
 
@@ -77,7 +77,7 @@ export default function Opening() {
           id="outlined-basic"
           variant="outlined"
           placeholder="Enter your name"
-          value={name}
+          value={customer_name}
           fullWidth
           size="small"
           onChange={handleOnChange}

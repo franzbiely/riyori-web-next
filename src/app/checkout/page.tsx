@@ -86,12 +86,12 @@ export default function Checkout() {
     }
   };
   const handleClick = async () => {
-    const name = await localStorage.getItem("name");
+    const customer_name = await localStorage.getItem("customer_name");
     const newOrdersCache = cart.map((item) => {
       return {
         _id: item._id,
         qty: item.quantity,
-        name: name,
+        customer_name: customer_name,
       };
     });
     const branch_Id = await localStorage.getItem("branch_Id");
