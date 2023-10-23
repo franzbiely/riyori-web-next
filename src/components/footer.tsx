@@ -1,11 +1,19 @@
 import styles from "./layout.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
-  const transaction_Id = localStorage.getItem("transaction_Id");
+  const [transactionId, setTransactionId] = useState<string | null>(null);
 
-  const footerContent = transaction_Id ? (
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localTransactionId = localStorage.getItem("transaction_Id");
+      setTransactionId(localTransactionId);
+    }
+  }, []);
+
+  const footerContent = transactionId ? (
     <div className={styles.column}>
       <Link href={"/orders"}>
         <Image
