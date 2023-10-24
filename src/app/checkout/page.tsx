@@ -96,7 +96,8 @@ export default function Checkout() {
     listenToSocket(socket);
     socket.emit('message-to-branch', {
       title: "Customer Just Ordered",
-      message: `A customer has placed an order on table #${data.table}`
+      message: `A customer has placed an order on table #${data.table}`,
+      branch_Id
     })
   }
   const listenToSocket = async (socket) => {
