@@ -48,6 +48,8 @@ export default function Category() {
     const data = await response.json();
     setCurrentCategory(data);
   };
+
+  // TODO: I think we need to refactor this to single fetch only. API should be adjusted to handle single request.
   const getAll = async () => {
     const urlParams = new URLSearchParams(Window.location.search);
     const branch_Id = localStorage.getItem("branch_Id");

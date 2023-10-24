@@ -63,6 +63,7 @@ export default function Splash() {
       localStorage.setItem("branch_Id", bid);
       localStorage.setItem("table_Id", tid);
 
+      // TO REMOVE WHEN utils.smartRedirect is working  
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/status/?sid=${sid}&bid=${bid}&tid=${tid}`
       );

@@ -90,7 +90,6 @@ export default function Checkout() {
   };
   const sendToSocket = async (socket, data) => {
     
-    console.log({data})
     const branch_Id = await localStorage.getItem("branch_Id");
     socket.emit('join-channel-branch', { branch_Id})
     listenToSocket(socket);
@@ -121,17 +120,6 @@ export default function Checkout() {
   const handleClick = async () => {
     setIsLoading(true)
     const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
-    const newOrdersCache = cart.map((item) => {
-      return {
-        _id: item._id,
-        qty: item.quantity,
-        customer_socket: socket.id
-      };
-    });
-    
-    localStorage.setItem("orders", JSON.stringify(newOrdersCache));
-    localStorage.setItem("orderNotes", notes);
-
     const urlencoded = new URLSearchParams();
     const branch_Id = await localStorage.getItem("branch_Id");
     const table_Id = await localStorage.getItem("table_Id");
@@ -140,25 +128,32 @@ export default function Checkout() {
     urlencoded.append("branch_Id", branch_Id || "");
     urlencoded.append("notes", notes);
     urlencoded.append("table", table_Id || "");
-    newOrdersCache.forEach((item) => {
-      urlencoded.append("item", JSON.stringify(item));
-    });
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: urlencoded,
-      }
-    );
-    const data = await response.json();
+    socket.on('connect', async () => {
+      cart.forEach((item) => {
+        urlencoded.append("item", JSON.stringify({
+          _id: item._id,
+          qty: item.quantity,
+          customer_socket: socket.id
+        }));
+      });
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: urlencoded,
+        }
+      );
+      const data = await response.json();
+      
+      sendToSocket(socket, data);
+      localStorage.setItem("transaction_Id", data.id);
+    })
     
-    sendToSocket(socket, data);
-
-    localStorage.setItem("transaction_Id", data.id);
     localStorage.removeItem("orders");
     localStorage.removeItem("orderNotes");
   };
@@ -168,39 +163,6 @@ export default function Checkout() {
   const handleAddMore = () => {
     Window.location.href = `/menu`;
   };
-  // const triggerPushNotification = async () => {
-  //   console.log('handle click triggered1')
-  //   const branch_Id = await localStorage.getItem("branch_Id");
-  //   const table_Id = await localStorage.getItem("table_Id");
-  //   const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
-    // socket.emit('join-customer-room', {
-    //   transaction_Id: 
-    // }, (response:any) => {
-    //   // This callback is executed when the server responds
-    //   console.log({response})
-    // });
-
-    // socket.emit("order.new", {
-    //   title: `[Table ${table_Id}]: New Order`,
-    //   message: `Table ${table_Id} has sent an order!`,
-    //   branch_Id: branch_Id 
-    // }, (err:any, response:any) => {
-    //   if(!err) {
-    //     console.log({response})
-    //   }
-    // });
-    // socket.on("order.new", (data) => {
-    //   console.log({data})
-    //   console.log('on order.new')
-    // })
-    // socket.on('error', (error) => {
-    //   // Handle errors here
-    //   console.error('Socket error:', error);
-    // });
-  //   setApiCalled(false);
-    
-  //   return socket;
-  // }
 
   useEffect(() => {
     init();
@@ -216,12 +178,6 @@ export default function Checkout() {
       setTotal(newTotal);
     }
   }, [cart]);
-
-  // useEffect(() => {
-  //   if(apiCalled) {
-  //     triggerPushNotification()
-  //   }
-  // }, [apiCalled])
 
   return (
     <Subinnerpage title="Checkout">
