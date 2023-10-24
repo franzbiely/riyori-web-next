@@ -18,7 +18,7 @@ import {
   renderImage,
   toBase64,
 } from "./../../utils/utils";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
 import Skeleton from "react-loading-skeleton";
@@ -44,6 +44,8 @@ export default function Checkout() {
   const [cart, setCart] = useState<i_Cart[] | []>([]);
   const [notes, setNotes] = useState("");
   const [total, setTotal] = useState(0);
+  // const [apiCalled, setApiCalled] = useState(false);
+  
 
   const inputStyles = {
     borderRadius: "15px",
@@ -68,6 +70,7 @@ export default function Checkout() {
       };
     });
     setCart(newData);
+    
   };
   const handleChangeQty = (_id: number, qty: number) => {
     const newCart = [...cart];
@@ -85,24 +88,57 @@ export default function Checkout() {
       setCart(newCart);
     }
   };
+  const sendToSocket = async (socket, data) => {
+    
+    console.log({data})
+    const branch_Id = await localStorage.getItem("branch_Id");
+    socket.emit('join-channel-branch', { branch_Id})
+    listenToSocket(socket);
+    socket.emit('message-to-branch', {
+      title: "Customer Just Ordered",
+      message: `A customer has placed an order on table #${data.table}`
+    })
+  }
+  const listenToSocket = async (socket) => {
+    socket.on('join-channel-branch-response', data => {
+      if (data) {
+        console.log('You are connected to the branch socket.', {data, socket})
+      }
+    });
+    socket.on('message-to-branch-response', data => {
+      if (data) {
+        setIsLoading(false);
+        setTimeout(() => {
+          Window.location.href = `/confirm`;
+          console.log('Message successfully sent..', {data, socket})
+        }, 100)
+      }
+    });
+
+  }
+
   const handleClick = async () => {
+    setIsLoading(true)
+    const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
     const newOrdersCache = cart.map((item) => {
       return {
         _id: item._id,
         qty: item.quantity,
+        customer_socket: socket.id
       };
     });
-    const branch_Id = await localStorage.getItem("branch_Id");
-    const table_Id = await localStorage.getItem("table_Id");
+    
     localStorage.setItem("orders", JSON.stringify(newOrdersCache));
     localStorage.setItem("orderNotes", notes);
 
     const urlencoded = new URLSearchParams();
+    const branch_Id = await localStorage.getItem("branch_Id");
+    const table_Id = await localStorage.getItem("table_Id");
+    
     urlencoded.append("status", "new");
     urlencoded.append("branch_Id", branch_Id || "");
     urlencoded.append("notes", notes);
     urlencoded.append("table", table_Id || "");
-
     newOrdersCache.forEach((item) => {
       urlencoded.append("item", JSON.stringify(item));
     });
@@ -118,19 +154,12 @@ export default function Checkout() {
       }
     );
     const data = await response.json();
-
-    const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
-    socket.emit("order.new", {
-      title: `[Table ${table_Id}]: New Order`,
-      message: `Table ${table_Id} has sent an order!`,
-      branch_Id: branch_Id 
-    });
+    
+    sendToSocket(socket, data);
 
     localStorage.setItem("transaction_Id", data.id);
     localStorage.removeItem("orders");
     localStorage.removeItem("orderNotes");
-    setIsLoading(true);
-    Window.location.href = `/confirm`;
   };
   const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
     setNotes(element.currentTarget.value);
@@ -138,6 +167,39 @@ export default function Checkout() {
   const handleAddMore = () => {
     Window.location.href = `/menu`;
   };
+  // const triggerPushNotification = async () => {
+  //   console.log('handle click triggered1')
+  //   const branch_Id = await localStorage.getItem("branch_Id");
+  //   const table_Id = await localStorage.getItem("table_Id");
+  //   const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
+    // socket.emit('join-customer-room', {
+    //   transaction_Id: 
+    // }, (response:any) => {
+    //   // This callback is executed when the server responds
+    //   console.log({response})
+    // });
+
+    // socket.emit("order.new", {
+    //   title: `[Table ${table_Id}]: New Order`,
+    //   message: `Table ${table_Id} has sent an order!`,
+    //   branch_Id: branch_Id 
+    // }, (err:any, response:any) => {
+    //   if(!err) {
+    //     console.log({response})
+    //   }
+    // });
+    // socket.on("order.new", (data) => {
+    //   console.log({data})
+    //   console.log('on order.new')
+    // })
+    // socket.on('error', (error) => {
+    //   // Handle errors here
+    //   console.error('Socket error:', error);
+    // });
+  //   setApiCalled(false);
+    
+  //   return socket;
+  // }
 
   useEffect(() => {
     init();
@@ -153,6 +215,13 @@ export default function Checkout() {
       setTotal(newTotal);
     }
   }, [cart]);
+
+  // useEffect(() => {
+  //   if(apiCalled) {
+  //     triggerPushNotification()
+  //   }
+  // }, [apiCalled])
+
   return (
     <Subinnerpage title="Checkout">
       {cart.length > 0 ? (
