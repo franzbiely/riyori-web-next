@@ -100,7 +100,7 @@ export default function Checkout() {
     localStorage.setItem("orderNotes", notes);
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("status", "new");
+    urlencoded.append("status", "draft");
     urlencoded.append("branch_Id", branch_Id || "");
     urlencoded.append("notes", notes);
     urlencoded.append("table", table_Id || "");
