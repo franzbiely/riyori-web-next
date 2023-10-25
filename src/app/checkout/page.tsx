@@ -52,8 +52,8 @@ export default function Checkout() {
   };
 
   const init = async () => {
-    const lcData = JSON.parse(localStorage.getItem("orders") || '');
-    if(lcData === '') {
+    const lcData = JSON.parse(localStorage.getItem("orders") || "");
+    if (lcData === "") {
       return;
     }
     const ids = lcData.map((item: any) => item._id).join(",");
@@ -119,12 +119,13 @@ export default function Checkout() {
 
   const handleClick = async () => {
     setIsLoading(true)
+    const customer_name = await localStorage.getItem("customer_name");
     const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
     const urlencoded = new URLSearchParams();
     const branch_Id = await localStorage.getItem("branch_Id");
     const table_Id = await localStorage.getItem("table_Id");
     
-    urlencoded.append("status", "new");
+    urlencoded.append("status", "draft");
     urlencoded.append("branch_Id", branch_Id || "");
     urlencoded.append("notes", notes);
     urlencoded.append("table", table_Id || "");
@@ -134,6 +135,7 @@ export default function Checkout() {
         urlencoded.append("item", JSON.stringify({
           _id: item._id,
           qty: item.quantity,
+          customer_name: customer_name,
           customer_socket: socket.id
         }));
       });

@@ -45,9 +45,12 @@ export default function Orders() {
             {item.status.toLocaleUpperCase()}
           </span>
         ),
+        colName: item.customer_name,
       };
     });
     setOrdersUi(newOrdersUi);
+
+    console.log(newOrdersUi);
   };
   const handleClick = () => {
     setIsLoading(true);

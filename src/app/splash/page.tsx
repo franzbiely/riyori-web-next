@@ -75,11 +75,11 @@ export default function Splash() {
           setTimeout(() => {
             Window.location.href = "/confirm";
           }, 500);
-        } else if (data.status === "new") {
+        } else if (data.status === "draft") {
           setTimeout(() => {
             Window.location.href = "/confirm";
           }, 500);
-        } else if (data.status === "to_prepare") {
+        } else if (data.status === "new") {
           setTimeout(() => {
             Window.location.href = "/orders";
           }, 500);
