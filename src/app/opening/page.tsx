@@ -1,13 +1,14 @@
 // This is the second page opening screen
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import Image from "next/image";
 import "animate.css";
 import styles from "./opening.module.css";
 import Link from "next/link";
 import { Loader } from "@/utils/loader";
 import ryoriLogo from "../../../public/images/ryori-logo-icon.png";
+import TextField from "@mui/material/TextField";
 
 type Data = {
   photo: string;
@@ -20,7 +21,7 @@ if (typeof window !== "undefined") {
 
 export default function Opening() {
   const [isLoading, setIsLoading] = useState(false);
-
+  const [customer_name, setCustomerName] = useState("");
   const [productData, setProductData] = useState<Data>({
     photo: "",
   });
@@ -42,32 +43,45 @@ export default function Opening() {
       console.error("Error:", error);
     }
   }
+  const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
+    setCustomerName(element.currentTarget.value);
+  };
+  const inputStyles = {
+    marginTop: "5px",
+    backgroundColor: "#FFFFFF",
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const handleBtn = () => {
     setIsLoading(true);
+    localStorage.setItem("customer_name", customer_name);
     Window.location.href = `/menu`;
   };
-
-  useEffect(() => {
-    setIsLoading(false);
-    return () => {
-      setIsLoading(false);
-    };
-  }, []);
 
   return (
     <main className={styles.main}>
       <div className={styles.mainInner}>
         <Image
           className={styles.image}
-          src="/images/ryori-brand.png"
-          // src={productData.photo ? productData.photo : ryoriLogo}
+          // src="/images/ryori-brand.png"
+          src={productData.photo ? productData.photo : ryoriLogo}
           alt="Ryori"
           width={283}
           height={141}
+        />
+        {/* <br /> */}
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          placeholder="Enter your name"
+          value={customer_name}
+          fullWidth
+          size="small"
+          onChange={handleOnChange}
+          sx={{ "& .MuiOutlinedInput-root": inputStyles }}
         />
         <br />
         <br />

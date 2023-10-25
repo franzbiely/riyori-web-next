@@ -50,8 +50,8 @@ export default function Checkout() {
   };
 
   const init = async () => {
-    const lcData = JSON.parse(localStorage.getItem("orders") || '');
-    if(lcData === '') {
+    const lcData = JSON.parse(localStorage.getItem("orders") || "");
+    if (lcData === "") {
       return;
     }
     const ids = lcData.map((item: any) => item._id).join(",");
@@ -86,10 +86,12 @@ export default function Checkout() {
     }
   };
   const handleClick = async () => {
+    const customer_name = await localStorage.getItem("customer_name");
     const newOrdersCache = cart.map((item) => {
       return {
         _id: item._id,
         qty: item.quantity,
+        customer_name: customer_name,
       };
     });
     const branch_Id = await localStorage.getItem("branch_Id");
@@ -98,7 +100,7 @@ export default function Checkout() {
     localStorage.setItem("orderNotes", notes);
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("status", "new");
+    urlencoded.append("status", "draft");
     urlencoded.append("branch_Id", branch_Id || "");
     urlencoded.append("notes", notes);
     urlencoded.append("table", table_Id || "");
@@ -123,7 +125,7 @@ export default function Checkout() {
     socket.emit("order.new", {
       title: `[Table ${table_Id}]: New Order`,
       message: `Table ${table_Id} has sent an order!`,
-      branch_Id: branch_Id 
+      branch_Id: branch_Id,
     });
 
     localStorage.setItem("transaction_Id", data.id);
