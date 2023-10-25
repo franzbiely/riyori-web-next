@@ -61,3 +61,55 @@ export const toBase64 = (str) =>
   typeof window === 'undefined'
     ? Buffer.from(str).toString('base64')
     : window.btoa(str);
+
+export const smartRedirect = async () => {
+  const sid = localStorage.getItem("store_Id");
+  const bid = localStorage.getItem("branch_Id");
+  const tid = localStorage.getItem("table_Id");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/status/?sid=${sid}&bid=${bid}&tid=${tid}`
+  );
+  const data = await response.json();
+
+  if (data) {
+    const orders = localStorage.getItem("orders") || "";
+    if (orders.length > 0) {
+      setTimeout(() => {
+        window.location.href = "/confirm";
+      }, 500);
+    } else if (data.status === "new") {
+      setTimeout(() => {
+        window.location.href = "/confirm";
+      }, 500);
+    } else if (data.status === "to_prepare") {
+      setTimeout(() => {
+        window.location.href = "/orders";
+      }, 500);
+    } else if (data.status === "preparing") {
+      setTimeout(() => {
+        window.location.href = "/orders";
+      }, 500);
+    } else if (data.status === "serving") {
+      setTimeout(() => {
+        window.location.href = "/orders";
+      }, 500);
+    } else if (data.status === "served") {
+      localStorage.setItem("transaction_Id", data["_id"]);
+      setTimeout(() => {
+        window.location.href = "/summary";
+      }, 500);
+    } else if (data.status === "awaiting_next_action") {
+      setTimeout(() => {
+        window.location.href = "/payment";
+      }, 500);
+    } else {
+      localStorage.removeItem("orders");
+      localStorage.removeItem("orderNotes");
+      localStorage.removeItem("transaction_Id");
+      setTimeout(() => {
+        window.location.href = "/opening";
+      }, 1000);
+    }
+  }
+}

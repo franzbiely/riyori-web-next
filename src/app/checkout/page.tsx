@@ -18,7 +18,7 @@ import {
   renderImage,
   toBase64,
 } from "./../../utils/utils";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { Loader } from "@/utils/loader";
 import imagePlaceholder from "./../../../public/images/no-img.jpg";
 import Skeleton from "react-loading-skeleton";
@@ -44,6 +44,8 @@ export default function Checkout() {
   const [cart, setCart] = useState<i_Cart[] | []>([]);
   const [notes, setNotes] = useState("");
   const [total, setTotal] = useState(0);
+  // const [apiCalled, setApiCalled] = useState(false);
+  
 
   const inputStyles = {
     borderRadius: "15px",
@@ -68,6 +70,7 @@ export default function Checkout() {
       };
     });
     setCart(newData);
+    
   };
   const handleChangeQty = (_id: number, qty: number) => {
     const newCart = [...cart];
@@ -85,54 +88,76 @@ export default function Checkout() {
       setCart(newCart);
     }
   };
-  const handleClick = async () => {
-    const customer_name = await localStorage.getItem("customer_name");
-    const newOrdersCache = cart.map((item) => {
-      return {
-        _id: item._id,
-        qty: item.quantity,
-        customer_name: customer_name,
-      };
+  const sendToSocket = async (socket, data) => {
+    
+    const branch_Id = await localStorage.getItem("branch_Id");
+    socket.emit('join-channel-branch', { branch_Id})
+    listenToSocket(socket);
+    socket.emit('message-to-branch', {
+      title: "Customer Just Ordered",
+      message: `A customer has placed an order on table #${data.table}`,
+      branch_Id
+    })
+  }
+  const listenToSocket = async (socket) => {
+    socket.on('join-channel-branch-response', data => {
+      if (data) {
+        console.log('You are connected to the branch socket.', {data, socket})
+      }
     });
+    socket.on('message-to-branch-response', data => {
+      if (data) {
+        setIsLoading(false);
+        setTimeout(() => {
+          Window.location.href = `/confirm`;
+          console.log('Message successfully sent..', {data, socket})
+        }, 100)
+      }
+    });
+
+  }
+
+  const handleClick = async () => {
+    setIsLoading(true)
+    const customer_name = await localStorage.getItem("customer_name");
+    const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
+    const urlencoded = new URLSearchParams();
     const branch_Id = await localStorage.getItem("branch_Id");
     const table_Id = await localStorage.getItem("table_Id");
-    localStorage.setItem("orders", JSON.stringify(newOrdersCache));
-    localStorage.setItem("orderNotes", notes);
-
-    const urlencoded = new URLSearchParams();
+    
     urlencoded.append("status", "draft");
     urlencoded.append("branch_Id", branch_Id || "");
     urlencoded.append("notes", notes);
     urlencoded.append("table", table_Id || "");
 
-    newOrdersCache.forEach((item) => {
-      urlencoded.append("item", JSON.stringify(item));
-    });
+    socket.on('connect', async () => {
+      cart.forEach((item) => {
+        urlencoded.append("item", JSON.stringify({
+          _id: item._id,
+          qty: item.quantity,
+          customer_name: customer_name,
+          customer_socket: socket.id
+        }));
+      });
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: urlencoded,
-      }
-    );
-    const data = await response.json();
-
-    const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
-    socket.emit("order.new", {
-      title: `[Table ${table_Id}]: New Order`,
-      message: `Table ${table_Id} has sent an order!`,
-      branch_Id: branch_Id,
-    });
-
-    localStorage.setItem("transaction_Id", data.id);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: urlencoded,
+        }
+      );
+      const data = await response.json();
+      
+      sendToSocket(socket, data);
+      localStorage.setItem("transaction_Id", data.id);
+    })
+    
     localStorage.removeItem("orders");
     localStorage.removeItem("orderNotes");
-    setIsLoading(true);
-    Window.location.href = `/confirm`;
   };
   const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
     setNotes(element.currentTarget.value);
@@ -155,6 +180,7 @@ export default function Checkout() {
       setTotal(newTotal);
     }
   }, [cart]);
+
   return (
     <Subinnerpage title="Checkout">
       {cart.length > 0 ? (
