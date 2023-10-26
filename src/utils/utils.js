@@ -58,8 +58,8 @@ export const convertImage = (w, h) => `
   </svg>`;
 
 export const toBase64 = (str) =>
-  typeof window === 'undefined'
-    ? Buffer.from(str).toString('base64')
+  typeof window === "undefined"
+    ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
 export const smartRedirect = async () => {
@@ -78,19 +78,19 @@ export const smartRedirect = async () => {
       setTimeout(() => {
         window.location.href = "/confirm";
       }, 500);
-    } else if (data.status === "new") {
+    } else if (data.status === "draft") {
       setTimeout(() => {
         window.location.href = "/confirm";
       }, 500);
-    } else if (data.status === "to_prepare") {
+    } else if (data.status === "new") {
       setTimeout(() => {
         window.location.href = "/orders";
       }, 500);
-    } else if (data.status === "preparing") {
+    } else if (data.status === "new") {
       setTimeout(() => {
         window.location.href = "/orders";
       }, 500);
-    } else if (data.status === "serving") {
+    } else if (data.status === "new") {
       setTimeout(() => {
         window.location.href = "/orders";
       }, 500);
@@ -112,4 +112,4 @@ export const smartRedirect = async () => {
       }, 1000);
     }
   }
-}
+};
