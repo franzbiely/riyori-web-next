@@ -25,6 +25,7 @@ export default function Opening() {
   const [productData, setProductData] = useState<Data>({
     photo: "",
   });
+  const [characterCount, setCharacterCount] = useState(20);
 
   async function fetchData() {
     try {
@@ -44,8 +45,15 @@ export default function Opening() {
     }
   }
   const handleOnChange = (element: ChangeEvent<HTMLInputElement>) => {
-    setCustomerName(element.currentTarget.value);
+    const inputValue = element.currentTarget.value;
+    const remainingCharacters = 20 - inputValue.length;
+
+    if (remainingCharacters >= 0) {
+      setCustomerName(inputValue);
+      setCharacterCount(remainingCharacters);
+    }
   };
+
   const inputStyles = {
     marginTop: "5px",
     backgroundColor: "#FFFFFF",
@@ -83,6 +91,7 @@ export default function Opening() {
           onChange={handleOnChange}
           sx={{ "& .MuiOutlinedInput-root": inputStyles }}
         />
+        <p style={{ fontSize: 12 }}>{characterCount} Remaining</p>
         <br />
         <br />
 
