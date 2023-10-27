@@ -11,11 +11,13 @@ import Image from "next/image";
 import { ChangeEvent, useEffect, useLayoutEffect, useState } from "react";
 import layout from "./../../components/layout.module.css";
 import styles from "./checkout.module.css";
+import stylesConfirm from "./../confirm/confirm.module.css";
 import Link from "next/link";
 import {
   convertImage,
   formatCurrency,
   renderImage,
+  smartRedirect,
   toBase64,
 } from "./../../utils/utils";
 import { io, Socket } from "socket.io-client";
@@ -44,6 +46,7 @@ export default function Checkout() {
   const [cart, setCart] = useState<i_Cart[] | []>([]);
   const [notes, setNotes] = useState("");
   const [total, setTotal] = useState(0);
+  const [inConfirm, setInConfirm] = useState(false)
   // const [apiCalled, setApiCalled] = useState(false);
   
 
@@ -109,12 +112,16 @@ export default function Checkout() {
       if (data) {
         setIsLoading(false);
         setTimeout(() => {
-          Window.location.href = `/confirm`;
+          setInConfirm(true)
           console.log('Message successfully sent..', {data, socket})
         }, 100)
       }
     });
-
+    socket.on('message-to-customer', data => {
+      if (data) {
+        smartRedirect()
+      }
+    })
   }
 
   const handleClick = async () => {
@@ -183,102 +190,120 @@ export default function Checkout() {
 
   return (
     <Subinnerpage title="Checkout">
-      {cart.length > 0 ? (
-        <>
-          <ul className={styles.list}>
-            {cart.map((item: any, key) => (
-              <li className={styles.item} key={key}>
-                <Image
-                  className="image"
-                  src={renderImage(item.photo ? item.photo : imagePlaceholder)}
-                  alt={item.title}
-                  width={107}
-                  height={71}
-                  loading="lazy"
-                  placeholder="blur"
-                  blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                    convertImage(700, 475)
-                  )}`}
-                />
-                <div className={styles.item_meta}>
-                  <div>
-                    <h6>{item.title}</h6>
-                    <small>{item.description}</small>
+      {
+        inConfirm ? 
+        <div className={`${stylesConfirm.confirm_container} ${layout.container}`}>
+          <Image
+            src="/images/green-circle.svg"
+            alt="Thank You"
+            width={120}
+            height={120}
+          />
+          <h1 className={layout.h1}>Please wait...</h1>
+          <h2>Our Staff will confirm your order in a moment.</h2>
+          <br />
+          <p>
+            For now, you could quit the app and rescan to check your food&apos;s
+            status.
+          </p>
+        </div>
+        : (cart.length > 0) ? (
+          <>
+            <ul className={styles.list}>
+              {cart.map((item: any, key) => (
+                <li className={styles.item} key={key}>
+                  <Image
+                    className="image"
+                    src={renderImage(item.photo ? item.photo : imagePlaceholder)}
+                    alt={item.title}
+                    width={107}
+                    height={71}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                      convertImage(700, 475)
+                    )}`}
+                  />
+                  <div className={styles.item_meta}>
+                    <div>
+                      <h6>{item.title}</h6>
+                      <small>{item.description}</small>
 
-                    <div className={layout.container}>
-                      <div className={`${layout.column} ${layout.f8}`}>
-                        <QuantityField
-                          fontSize={"12px"}
-                          value={item.quantity}
-                          changeEvent={(qty: number) => {
-                            // console.log("the change Event is fired")
-                            handleChangeQty(key, qty);
-                          }}
-                        />
-                      </div>
-                      <div className={`${layout.column}`}>
-                        {formatCurrency(item.price)}
+                      <div className={layout.container}>
+                        <div className={`${layout.column} ${layout.f8}`}>
+                          <QuantityField
+                            fontSize={"12px"}
+                            value={item.quantity}
+                            changeEvent={(qty: number) => {
+                              // console.log("the change Event is fired")
+                              handleChangeQty(key, qty);
+                            }}
+                          />
+                        </div>
+                        <div className={`${layout.column}`}>
+                          {formatCurrency(item.price)}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <br />
-          <h4>Add notes for the chef.</h4>
-          <small>
-            example: &quot;I alergic to seafoods. Halal only please.&quot;
-          </small>
-          <TextField
-            multiline
-            rows={4}
-            variant="outlined"
-            placeholder="Add food notes here..."
-            name="notes"
-            fullWidth
-            sx={{ "& .MuiOutlinedInput-root": inputStyles }}
-            onChange={handleOnChange}
-          />
-          <br />
-          <br />
-          <div className={layout.container}>
-            <div className={`${layout.column} ${layout.f6}`}>Total</div>
-            <div className={`${layout.column}`}>{formatCurrency(total)}</div>
-          </div>
-          <br />
-          <button onClick={handleAddMore} className="button-primary">
-            Add More
-          </button>
-          <br />
-          <br />
-          <button onClick={handleClick} className="button-secondary">
-            Checkout
-          </button>
-        </>
-      ) : (
-        <>
-          <Skeleton height={150} />
-          <br />
-          <h4>
-            <Skeleton />
-          </h4>
-          <small>
-            <Skeleton />
-          </small>
-          <Skeleton height={100} />
-          <br />
-          <br />
-          <div className={layout.container}>
-            <Skeleton />
-          </div>
-          <br />
-          <Skeleton height={50} />
-          <br />
-          <br />
-          <Skeleton height={50} />
-        </>
-      )}
+                </li>
+              ))}
+            </ul>
+            <br />
+            <h4>Add notes for the chef.</h4>
+            <small>
+              example: &quot;I alergic to seafoods. Halal only please.&quot;
+            </small>
+            <TextField
+              multiline
+              rows={4}
+              variant="outlined"
+              placeholder="Add food notes here..."
+              name="notes"
+              fullWidth
+              sx={{ "& .MuiOutlinedInput-root": inputStyles }}
+              onChange={handleOnChange}
+            />
+            <br />
+            <br />
+            <div className={layout.container}>
+              <div className={`${layout.column} ${layout.f6}`}>Total</div>
+              <div className={`${layout.column}`}>{formatCurrency(total)}</div>
+            </div>
+            <br />
+            <button onClick={handleAddMore} className="button-primary">
+              Add More
+            </button>
+            <br />
+            <br />
+            <button onClick={handleClick} className="button-secondary">
+              Checkout
+            </button>
+          </>
+        ) : (
+          <>
+            <Skeleton height={150} />
+            <br />
+            <h4>
+              <Skeleton />
+            </h4>
+            <small>
+              <Skeleton />
+            </small>
+            <Skeleton height={100} />
+            <br />
+            <br />
+            <div className={layout.container}>
+              <Skeleton />
+            </div>
+            <br />
+            <Skeleton height={50} />
+            <br />
+            <br />
+            <Skeleton height={50} />
+          </>
+        )
+      }
     </Subinnerpage>
   );
 }
