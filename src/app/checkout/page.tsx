@@ -46,9 +46,8 @@ export default function Checkout() {
   const [cart, setCart] = useState<i_Cart[] | []>([]);
   const [notes, setNotes] = useState("");
   const [total, setTotal] = useState(0);
-  const [inConfirm, setInConfirm] = useState(false)
+  const [inConfirm, setInConfirm] = useState(false);
   // const [apiCalled, setApiCalled] = useState(false);
-  
 
   const inputStyles = {
     borderRadius: "15px",
@@ -73,7 +72,6 @@ export default function Checkout() {
       };
     });
     setCart(newData);
-    
   };
   const handleChangeQty = (_id: number, qty: number) => {
     const newCart = [...cart];
@@ -91,60 +89,65 @@ export default function Checkout() {
       setCart(newCart);
     }
   };
-  const sendToSocket = async (socket, data) => {
-    
+  const sendToSocket = async (socket: any, data: any) => {
     const branch_Id = await localStorage.getItem("branch_Id");
-    socket.emit('join-channel-branch', { branch_Id})
+    socket.emit("join-channel-branch", { branch_Id });
     listenToSocket(socket);
-    socket.emit('message-to-branch', {
+    socket.emit("message-to-branch", {
       title: "Customer Just Ordered",
       message: `A customer has placed an order on table #${data.table}`,
-      branch_Id
-    })
-  }
-  const listenToSocket = async (socket) => {
-    socket.on('join-channel-branch-response', data => {
+      branch_Id,
+    });
+  };
+  const listenToSocket = async (socket: any) => {
+    socket.on("join-channel-branch-response", (data: any) => {
       if (data) {
-        console.log('You are connected to the branch socket.', {data, socket})
+        console.log("You are connected to the branch socket.", {
+          data,
+          socket,
+        });
       }
     });
-    socket.on('message-to-branch-response', data => {
+    socket.on("message-to-branch-response", (data: any) => {
       if (data) {
         setIsLoading(false);
         setTimeout(() => {
-          setInConfirm(true)
-          console.log('Message successfully sent..', {data, socket})
-        }, 100)
+          setInConfirm(true);
+          console.log("Message successfully sent..", { data, socket });
+        }, 100);
       }
     });
-    socket.on('message-to-customer', data => {
+    socket.on("message-to-customer", (data: any) => {
       if (data) {
-        smartRedirect()
+        smartRedirect();
       }
-    })
-  }
+    });
+  };
 
   const handleClick = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const customer_name = await localStorage.getItem("customer_name");
     const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
     const urlencoded = new URLSearchParams();
     const branch_Id = await localStorage.getItem("branch_Id");
     const table_Id = await localStorage.getItem("table_Id");
-    
+
     urlencoded.append("status", "draft");
     urlencoded.append("branch_Id", branch_Id || "");
     urlencoded.append("notes", notes);
     urlencoded.append("table", table_Id || "");
 
-    socket.on('connect', async () => {
+    socket.on("connect", async () => {
       cart.forEach((item) => {
-        urlencoded.append("item", JSON.stringify({
-          _id: item._id,
-          qty: item.quantity,
-          customer_name: customer_name,
-          customer_socket: socket.id
-        }));
+        urlencoded.append(
+          "item",
+          JSON.stringify({
+            _id: item._id,
+            qty: item.quantity,
+            customer_name: customer_name,
+            customer_socket: socket.id,
+          })
+        );
       });
 
       const response = await fetch(
@@ -158,11 +161,11 @@ export default function Checkout() {
         }
       );
       const data = await response.json();
-      
+
       sendToSocket(socket, data);
       localStorage.setItem("transaction_Id", data.id);
-    })
-    
+    });
+
     localStorage.removeItem("orders");
     localStorage.removeItem("orderNotes");
   };
@@ -190,9 +193,10 @@ export default function Checkout() {
 
   return (
     <Subinnerpage title="Checkout">
-      {
-        inConfirm ? 
-        <div className={`${stylesConfirm.confirm_container} ${layout.container}`}>
+      {inConfirm ? (
+        <div
+          className={`${stylesConfirm.confirm_container} ${layout.container}`}
+        >
           <Image
             src="/images/green-circle.svg"
             alt="Thank You"
@@ -207,103 +211,102 @@ export default function Checkout() {
             status.
           </p>
         </div>
-        : (cart.length > 0) ? (
-          <>
-            <ul className={styles.list}>
-              {cart.map((item: any, key) => (
-                <li className={styles.item} key={key}>
-                  <Image
-                    className="image"
-                    src={renderImage(item.photo ? item.photo : imagePlaceholder)}
-                    alt={item.title}
-                    width={107}
-                    height={71}
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                      convertImage(700, 475)
-                    )}`}
-                  />
-                  <div className={styles.item_meta}>
-                    <div>
-                      <h6>{item.title}</h6>
-                      <small>{item.description}</small>
+      ) : cart.length > 0 ? (
+        <>
+          <ul className={styles.list}>
+            {cart.map((item: any, key) => (
+              <li className={styles.item} key={key}>
+                <Image
+                  className="image"
+                  src={renderImage(item.photo ? item.photo : imagePlaceholder)}
+                  alt={item.title}
+                  width={107}
+                  height={71}
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                    convertImage(700, 475)
+                  )}`}
+                />
+                <div className={styles.item_meta}>
+                  <div>
+                    <h6>{item.title}</h6>
+                    <small>{item.description}</small>
 
-                      <div className={layout.container}>
-                        <div className={`${layout.column} ${layout.f8}`}>
-                          <QuantityField
-                            fontSize={"12px"}
-                            value={item.quantity}
-                            changeEvent={(qty: number) => {
-                              // console.log("the change Event is fired")
-                              handleChangeQty(key, qty);
-                            }}
-                          />
-                        </div>
-                        <div className={`${layout.column}`}>
-                          {formatCurrency(item.price)}
-                        </div>
+                    <div className={layout.container}>
+                      <div className={`${layout.column} ${layout.f8}`}>
+                        <QuantityField
+                          fontSize={"12px"}
+                          value={item.quantity}
+                          changeEvent={(qty: number) => {
+                            // console.log("the change Event is fired")
+                            handleChangeQty(key, qty);
+                          }}
+                        />
+                      </div>
+                      <div className={`${layout.column}`}>
+                        {formatCurrency(item.price)}
                       </div>
                     </div>
                   </div>
-                </li>
-              ))}
-            </ul>
-            <br />
-            <h4>Add notes for the chef.</h4>
-            <small>
-              example: &quot;I alergic to seafoods. Halal only please.&quot;
-            </small>
-            <TextField
-              multiline
-              rows={4}
-              variant="outlined"
-              placeholder="Add food notes here..."
-              name="notes"
-              fullWidth
-              sx={{ "& .MuiOutlinedInput-root": inputStyles }}
-              onChange={handleOnChange}
-            />
-            <br />
-            <br />
-            <div className={layout.container}>
-              <div className={`${layout.column} ${layout.f6}`}>Total</div>
-              <div className={`${layout.column}`}>{formatCurrency(total)}</div>
-            </div>
-            <br />
-            <button onClick={handleAddMore} className="button-primary">
-              Add More
-            </button>
-            <br />
-            <br />
-            <button onClick={handleClick} className="button-secondary">
-              Checkout
-            </button>
-          </>
-        ) : (
-          <>
-            <Skeleton height={150} />
-            <br />
-            <h4>
-              <Skeleton />
-            </h4>
-            <small>
-              <Skeleton />
-            </small>
-            <Skeleton height={100} />
-            <br />
-            <br />
-            <div className={layout.container}>
-              <Skeleton />
-            </div>
-            <br />
-            <Skeleton height={50} />
-            <br />
-            <br />
-            <Skeleton height={50} />
-          </>
-        )
-      }
+                </div>
+              </li>
+            ))}
+          </ul>
+          <br />
+          <h4>Add notes for the chef.</h4>
+          <small>
+            example: &quot;I alergic to seafoods. Halal only please.&quot;
+          </small>
+          <TextField
+            multiline
+            rows={4}
+            variant="outlined"
+            placeholder="Add food notes here..."
+            name="notes"
+            fullWidth
+            sx={{ "& .MuiOutlinedInput-root": inputStyles }}
+            onChange={handleOnChange}
+          />
+          <br />
+          <br />
+          <div className={layout.container}>
+            <div className={`${layout.column} ${layout.f6}`}>Total</div>
+            <div className={`${layout.column}`}>{formatCurrency(total)}</div>
+          </div>
+          <br />
+          <button onClick={handleAddMore} className="button-primary">
+            Add More
+          </button>
+          <br />
+          <br />
+          <button onClick={handleClick} className="button-secondary">
+            Checkout
+          </button>
+        </>
+      ) : (
+        <>
+          <Skeleton height={150} />
+          <br />
+          <h4>
+            <Skeleton />
+          </h4>
+          <small>
+            <Skeleton />
+          </small>
+          <Skeleton height={100} />
+          <br />
+          <br />
+          <div className={layout.container}>
+            <Skeleton />
+          </div>
+          <br />
+          <Skeleton height={50} />
+          <br />
+          <br />
+          <Skeleton height={50} />
+        </>
+      )}
     </Subinnerpage>
   );
 }
