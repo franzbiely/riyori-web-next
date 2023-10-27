@@ -78,19 +78,19 @@ export const smartRedirect = async () => {
       setTimeout(() => {
         window.location.href = "/confirm";
       }, 500);
-    } else if (data.status === "new") {
+    } else if (data.status === "draft") {
       setTimeout(() => {
         window.location.href = "/confirm";
       }, 500);
-    } else if (data.status === "to_prepare") {
+    } else if (data.status === "new") {
       setTimeout(() => {
         window.location.href = "/orders";
       }, 500);
-    } else if (data.status === "preparing") {
+    } else if (data.status === "cooking") {
       setTimeout(() => {
         window.location.href = "/orders";
       }, 500);
-    } else if (data.status === "serving") {
+    } else if (data.status === "ready") {
       setTimeout(() => {
         window.location.href = "/orders";
       }, 500);

@@ -6,7 +6,7 @@ import "animate.css";
 import styles from "./splash.module.css";
 import React, { useState, useEffect } from "react";
 import { init } from "next/dist/compiled/@vercel/og/satori";
-import { decrypt, encrypt, parseQueryStringToObject } from "@/utils/utils";
+import { decrypt, encrypt, parseQueryStringToObject, smartRedirect } from "@/utils/utils";
 
 var Window = { location: { search: "", href: "" } };
 if (typeof window !== "undefined") {
@@ -63,52 +63,7 @@ export default function Splash() {
       localStorage.setItem("branch_Id", bid);
       localStorage.setItem("table_Id", tid);
 
-      // TO REMOVE WHEN utils.smartRedirect is working  
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/status/?sid=${sid}&bid=${bid}&tid=${tid}`
-      );
-      const data = await response.json();
-
-      if (data) {
-        const orders = localStorage.getItem("orders") || "";
-        if (orders.length > 0) {
-          setTimeout(() => {
-            Window.location.href = "/confirm";
-          }, 500);
-        } else if (data.status === "draft") {
-          setTimeout(() => {
-            Window.location.href = "/confirm";
-          }, 500);
-        } else if (data.status === "new") {
-          setTimeout(() => {
-            Window.location.href = "/orders";
-          }, 500);
-        } else if (data.status === "preparing") {
-          setTimeout(() => {
-            Window.location.href = "/orders";
-          }, 500);
-        } else if (data.status === "serving") {
-          setTimeout(() => {
-            Window.location.href = "/orders";
-          }, 500);
-        } else if (data.status === "served") {
-          localStorage.setItem("transaction_Id", data["_id"]);
-          setTimeout(() => {
-            Window.location.href = "/summary";
-          }, 500);
-        } else if (data.status === "awaiting_next_action") {
-          setTimeout(() => {
-            Window.location.href = "/payment";
-          }, 500);
-        } else {
-          localStorage.removeItem("orders");
-          localStorage.removeItem("orderNotes");
-          localStorage.removeItem("transaction_Id");
-          setTimeout(() => {
-            Window.location.href = "/opening";
-          }, 1000);
-        }
-      }
+      smartRedirect()
     });
   };
   useEffect(() => {
