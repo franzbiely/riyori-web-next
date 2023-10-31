@@ -12,6 +12,8 @@ import styles from "./payment.module.css";
 import TextField from "@mui/material/TextField";
 import { ChangeEvent, useState, useEffect } from "react";
 import { Loader } from "@/utils/loader";
+import { io, Socket } from "socket.io-client";
+import { smartRedirect } from "./../../utils/utils";
 
 var Window = { location: { search: "", href: "" } };
 if (typeof window !== "undefined") {
@@ -23,6 +25,7 @@ export default function Payment() {
   const [error, setError] = useState("");
   const [openBank, setOpenBank] = useState(false);
   const [openGCash, setOpenGCash] = useState(false);
+  const [inConfirm, setInConfirm] = useState(false);
   const [gcashData, setGcashData] = useState({
     phone: "",
     name: "",
@@ -47,12 +50,47 @@ export default function Payment() {
     setOpenBank(false);
   };
 
+  const sendToSocket = async (socket: any, data: any) => {
+    const branch_Id = await localStorage.getItem("branch_Id");
+    socket.emit("join-channel-branch", { branch_Id });
+    listenToSocket(socket);
+    socket.emit("message-to-branch", {
+      title: "Customer Ready to Pay",
+      message: `Table #${data.table} is Paying`,
+      branch_Id,
+    });
+  };
+  const listenToSocket = async (socket: any) => {
+    socket.on("join-channel-branch-response", (data: any) => {
+      if (data) {
+        console.log("You are connected to the branch socket.", {
+          data,
+          socket,
+        });
+      }
+    });
+    socket.on("message-to-branch-response", (data: any) => {
+      if (data) {
+        setIsLoading(false);
+        setTimeout(() => {
+          setInConfirm(true);
+          console.log("Message successfully sent..", { data, socket });
+        }, 100);
+      }
+    });
+    socket.on("message-to-customer", (data: any) => {
+      if (data) {
+        smartRedirect();
+      }
+    });
+  };
+
   const toPayCash = async () => {
     const transaction_Id = localStorage.getItem("transaction_Id") || "";
-
+    const socket = io(process.env.NEXT_PUBLIC_API_URL || "");
     const urlencoded = new URLSearchParams();
     urlencoded.append("id", transaction_Id?.toString());
-    urlencoded.append("status", "to_pay_cash");
+    urlencoded.append("status", "paying");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/pos/transaction/${transaction_Id}`,
       {
@@ -63,11 +101,10 @@ export default function Payment() {
         body: urlencoded,
       }
     );
-    // const data = await response.json();
-    // console.log(data);
-    // if (data.redirect) {
+
+    const data = await response.json();
+    sendToSocket(socket, data);
     Window.location.href = "/rate";
-    // }
   };
 
   const debitPay = async () => {
@@ -197,7 +234,7 @@ export default function Payment() {
             {/* </Link> */}
           </li>
         </Link>
-        <Link href="" onClick={openBankField}>
+        {/* <Link href="" onClick={openBankField}>
           <li className={`${styles.item} ${layout.container}`}>
             <Image
               className={`${layout.column} `}
@@ -212,8 +249,8 @@ export default function Payment() {
               Debit/Credit
             </div>
           </li>
-        </Link>
-        <Link href="" onClick={openGCashField}>
+        </Link> */}
+        {/* <Link href="" onClick={tempGcash}>
           <li className={`${styles.item} ${layout.container}`}>
             <Image
               className={`${layout.column} `}
@@ -228,7 +265,7 @@ export default function Payment() {
               Gcash
             </div>
           </li>
-        </Link>
+        </Link> */}
       </ul>
 
       <br />
