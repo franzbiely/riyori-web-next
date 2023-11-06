@@ -59,7 +59,8 @@ export default function Category() {
       }/branchItem/?branch_Id=${branch_Id}&category_Id=${urlParams.get("id")}`
     );
     const data = await response.json();
-    setMenuItem(data);
+    const branchItem_qty = data.filter((qty: any) => qty.quantity !== 0);
+    setMenuItem(branchItem_qty);
   };
 
   useEffect(() => {
