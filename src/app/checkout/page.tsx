@@ -217,6 +217,7 @@ export default function Checkout() {
             {cart.map((item: any, key) => (
               <li className={styles.item} key={key}>
                 <Image
+                  style={{ maxHeight: 80 }}
                   className="image"
                   src={renderImage(item.photo ? item.photo : imagePlaceholder)}
                   alt={item.title}
@@ -239,7 +240,6 @@ export default function Checkout() {
                           fontSize={"12px"}
                           value={item.quantity}
                           changeEvent={(qty: number) => {
-                            // console.log("the change Event is fired")
                             handleChangeQty(key, qty);
                           }}
                         />

@@ -59,8 +59,7 @@ export default function Category() {
       }/branchItem/?branch_Id=${branch_Id}&category_Id=${urlParams.get("id")}`
     );
     const data = await response.json();
-    const branchItem_qty = data.filter((qty: any) => qty.quantity !== 0);
-    setMenuItem(branchItem_qty);
+    setMenuItem(data);
   };
 
   useEffect(() => {
@@ -86,16 +85,18 @@ export default function Category() {
                 <button
                   className={styles.btn}
                   onClick={() => handleBtn(item._id)}
+                  disabled={Number(item.quantity) === 0}
                 >
-                  <div style={{ height: 1 }}>
+                  <div>
                     <Image
+                      style={{ height: 70, width: 90 }}
                       className="image"
                       src={renderImage(
                         item.photo ? item.photo : imagePlaceholder
                       )}
-                      alt="Ryori"
+                      alt={item.title}
                       width={90}
-                      height={90}
+                      height={50}
                       loading="lazy"
                       placeholder="blur"
                       blurDataURL={`data:image/svg+xml;base64,${toBase64(
@@ -106,7 +107,17 @@ export default function Category() {
                   <div className={styles.category_meta}>
                     <h6>{item.title}</h6>
                     <small>{formatCurrency(item.price)}</small>
-                    <button className="button-secondary">Add to Basket</button>
+                    {Number(item.quantity) === 0 && (
+                      <small style={{ marginLeft: 10, color: "#DB1B1B" }}>
+                        Sold
+                      </small>
+                    )}
+                    <button
+                      className="button-secondary"
+                      disabled={Number(item.quantity) === 0}
+                    >
+                      Add to Baskets
+                    </button>
                   </div>
                 </button>
               </li>

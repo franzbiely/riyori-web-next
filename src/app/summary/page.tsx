@@ -91,6 +91,7 @@ export default function Summary() {
           orders.map((item: any, key) => (
             <li className={`${styles.item} ${layout.container}`} key={key}>
               <Image
+                style={{ maxHeight: 50 }}
                 className={`${styles.image} ${layout.column} ${layout.f2}`}
                 src={renderImage(item?.photo ? item.photo : imagePlaceholder)}
                 alt={item.title}

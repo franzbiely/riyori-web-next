@@ -63,6 +63,7 @@ export default function Product() {
       {detail ? (
         <>
           <Image
+            style={{ maxHeight: 280 }}
             className={styles.featured_image}
             src={renderImage(detail?.photo ? detail.photo : imagePlaceholder)}
             alt={detail.title}
